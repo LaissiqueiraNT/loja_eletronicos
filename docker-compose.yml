@@ -1,0 +1,68 @@
+
+
+services:
+  php:
+    build:
+      context: .
+    volumes:
+      - ./php.ini:/etc/php/8.2/cli/conf.d/custom.ini
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/laravel:/var/www/html:delegated
+    depends_on:
+      - db
+      - mailhog
+    restart: always
+
+  db:
+    image: mysql
+    env_file: .env
+    environment:
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+
+  composer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src/laravel:/var/www/html:delegated
+    entrypoint: ["composer"]
+
+  artisan:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src/laravel:/var/www/html:delegated
+    entrypoint: ["php", "artisan"]
+
+  npm:
+    image: node:current-alpine
+    volumes:
+      - ./src/laravel:/var/www/html
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "5173:5173"
+    working_dir: /var/www/html
+    entrypoint: ["npm"]
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "1025:1025"
+      - "8025:8025"
