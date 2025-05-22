@@ -349,30 +349,31 @@ return [
                     'submenu' => [
                                 [
                                     'text' => 'Clientes',
-                                    'url' => '/clients',
+                                    'url' => '/client',
                                     'icon' => 'fas fa-user-edit',
                                 ],
                                 [
                                     'text' => 'Funcionarios',
-                                    'url' => '/employees',
+                                    'url' => '/employee',
                                     'icon' => 'fas fa-hands-helping',
                                 ],
                                 [
-                                    'text' => 'Autores',
-                                    'url' => '#',
+                                    'text' => 'Produtos',
+                                    'url' => '/product',
                                     'icon' => 'fas fa-at',
                                 ],
                             ],
                 ],
                 [
-                    'text' => 'Locação',
-                    'url' => '#',
+                    'text' => 'Vendas',
+                    'url' => '/sale',
                     'icon' => 'fas fa-map-marker-alt',
                     
                 ],
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'Pedidos',
+                    'url' => '/request',
+                    'icon' => 'fas fa-map-marker-alt',
                 ],
             ],
         ],

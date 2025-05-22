@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\Employee;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
-class ClientController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
+              if ($request->ajax()) {
            
-            $data = Client::latest()->get();
+            $data = Employee::latest()->get();
             
             return DataTables::of($data)
                 ->addColumn('action', function ($row) {
                     $actionBtns = '
-                        <a href="' . route("client.edit", $row->id) . '" class="btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
+                        <a href="' . route("employee.edit", $row->id) . '" class="btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
                         
-                        <form action="' . route("client.destroy", $row->id) . '" method="POST" style="display:inline" onsubmit="return confirm(\'Deseja realmente excluir este registro?\')">
+                        <form action="' . route("employee.destroy", $row->id) . '" method="POST" style="display:inline" onsubmit="return confirm(\'Deseja realmente excluir este registro?\')">
                             ' . csrf_field() . '
                             ' . method_field("DELETE") . '
                             <button type="submit" class="btn btn-outline-danger btn-sm ml-2")><i class="fas fa-trash"></i></button>
@@ -34,7 +33,8 @@ class ClientController extends Controller
                 ->make(true);
         }
 
-        return view('clients.index');
+        return view('employees.index');
+    }
     }
 
     /**
@@ -42,8 +42,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-
-        return view('clients.crud');
+        //
     }
 
     /**
@@ -57,7 +56,7 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(string $id)
     {
         //
     }
@@ -65,7 +64,7 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         //
     }
@@ -73,7 +72,7 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -81,7 +80,7 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         //
     }

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->nullable()->constrained('clients');
             $table->foreignId('employee_id')->nullable()->constrained('employees');
-            $table->integer('quantity');
             $table->date('sale_date')->nullable();
             $table->decimal('total_price', 10, 2);
             $table->string('payment_method')->nullable();
