@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'EletroTech',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -30,8 +30,8 @@ return [
     |
     */
 
-    'use_ico_only' => false,
-    'use_full_favicon' => false,
+    'use_ico_only' => true,
+    'use_full_favicon' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>Biblioteca</b>Facil',
-    'logo_img' => 'vendor/adminlte/dist/img/book.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '&nbsp;',
+    'logo_img' => 'vendor/adminlte/dist/img/eletrotech.png',
+    'logo_img_class' => 'brand-image elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'GletroTech',
 
     /*
     |--------------------------------------------------------------------------
@@ -348,13 +348,13 @@ return [
                     'icon' => 'fas fa-tags',
                     'submenu' => [
                                 [
-                                    'text' => 'Editores',
-                                    'url' => '#',
+                                    'text' => 'Clientes',
+                                    'url' => '/clients',
                                     'icon' => 'fas fa-user-edit',
                                 ],
                                 [
-                                    'text' => 'Genero',
-                                    'url' => '#',
+                                    'text' => 'Funcionarios',
+                                    'url' => '/employees',
                                     'icon' => 'fas fa-hands-helping',
                                 ],
                                 [
