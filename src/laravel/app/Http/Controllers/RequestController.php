@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class EmployeeController extends Controller
+class RequestController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-  public function index(Request $request)
-{
-    if ($request->ajax()) {
-        $data = Employee::latest()->get();
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+        $data = Request::latest()->get();
 
         return DataTables::of($data)
             ->addColumn('action', function ($row) {
                 $actionBtns = '
-                    <a href="' . route("employee.edit", $row->id) . '" class="btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
+                    <a href="' . route("request.edit", $row->id) . '" class="btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
                     
-                    <form action="' . route("employee.destroy", $row->id) . '" method="POST" style="display:inline" onsubmit="return confirm(\'Deseja realmente excluir este registro?\')">
+                    <form action="' . route("request.destroy", $row->id) . '" method="POST" style="display:inline" onsubmit="return confirm(\'Deseja realmente excluir este registro?\')">
                         ' . csrf_field() . '
                         ' . method_field("DELETE") . '
                         <button type="submit" class="btn btn-outline-danger btn-sm ml-2"><i class="fas fa-trash"></i></button>
@@ -33,8 +32,8 @@ class EmployeeController extends Controller
             ->make(true);
     }
 
-    return view('employees.index');
-}
+    return view('requests.index');
+    }
 
     /**
      * Show the form for creating a new resource.

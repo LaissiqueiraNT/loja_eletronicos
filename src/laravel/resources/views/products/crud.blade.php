@@ -13,28 +13,28 @@
         <div class="card-body">
             <div class="form-group">
 
-                @if (isset($employee->id))
-                    <form method="post" action="{{ route('employee.update', ['employee' => $employee->id]) }}">
+                @if (isset($product->id))
+                    <form method="post" action="{{ route('product.update', ['product' => $product->id]) }}">
                         @csrf
                         @method('PUT')
                 @else
-                    <form method="post" action="{{ route('employee.store') }}">
+                    <form method="post" action="{{ route('product.store') }}">
                         @csrf
                 @endif
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="employee">Nome Completo</label>
-                        <input type="text" class="form-control" id="employee" name="employee"
-                            value="{{ $employee->employee ?? old('employee') }}">
-                        @if ($errors->has('employee'))
-                            <span style="color: red;">{{ $errors->first('employee') }}</span>
+                        <label for="product">Nome Completo</label>
+                        <input type="text" class="form-control" id="product" name="product"
+                            value="{{ $product->product ?? old('product') }}">
+                        @if ($errors->has('product'))
+                            <span style="color: red;">{{ $errors->first('product') }}</span>
                         @endif
                     </div>
                     <div class="col-md-6">
                         <label for="email">Email</label>
                         <input type="text" class="form-control" id="email" name="email"
-                            value="{{ $employee->email ?? old('email') }}">
+                            value="{{ $product->email ?? old('email') }}">
                         @if ($errors->has('email'))
                             <span style="color: red;">{{ $errors->first('email') }}</span>
                         @endif
@@ -45,7 +45,7 @@
                     <div class="col-md-6">
                         <label for="cep">CEP</label>
                         <input type="text" class="form-control" id="cep" name="cep"
-                            value="{{ $employee->cep ?? old('cep') }}">
+                            value="{{ $product->cep ?? old('cep') }}">
                         @if ($errors->has('cep'))
                             <span style="color: red;">{{ $errors->first('cep') }}</span>
                         @endif
@@ -53,7 +53,7 @@
                     <div class="col-md-6">
                         <label for="address">Endereço</label>
                         <input type="text" class="form-control" id="address" name="address"
-                            value="{{ $employee->address ?? old('address') }}">
+                            value="{{ $product->address ?? old('address') }}">
                         @if ($errors->has('address'))
                             <span style="color: red;">{{ $errors->first('address') }}</span>
                         @endif
@@ -64,7 +64,7 @@
                     <div class="col-md-6">
                         <label for="city">Cidade</label>
                         <input type="text" class="form-control" id="city" name="city"
-                            value="{{ $employee->city ?? old('city') }}">
+                            value="{{ $product->city ?? old('city') }}">
                         @if ($errors->has('city'))
                             <span style="color: red;">{{ $errors->first('city') }}</span>
                         @endif
@@ -72,7 +72,7 @@
                     <div class="col-md-6">
                         <label for="cpf">CPF</label>
                         <input type="text" class="form-control" id="cpf" name="cpf"
-                            value="{{ $employee->cpf ?? old('cpf') }}">
+                            value="{{ $product->cpf ?? old('cpf') }}">
                         @if ($errors->has('cpf'))
                             <span style="color: red;">{{ $errors->first('cpf') }}</span>
                         @endif
@@ -83,7 +83,7 @@
                     <div class="col-md-6">
                         <label for="rg">RG</label>
                         <input type="text" class="form-control" id="rg" name="rg"
-                            value="{{ $employee->rg ?? old('rg') }}">
+                            value="{{ $product->rg ?? old('rg') }}">
                         @if ($errors->has('rg'))
                             <span style="color: red;">{{ $errors->first('rg') }}</span>
                         @endif
@@ -91,7 +91,7 @@
                     <div class="col-md-6">
                         <label for="birthdate">Data de Nascimento</label>
                         <input type="date" class="form-control" id="birthdate" name="birthdate"
-                            value="{{ $employee->birthdate ?? old('birthdate') }}">
+                            value="{{ $product->birthdate ?? old('birthdate') }}">
                         @if ($errors->has('birthdate'))
                             <span style="color: red;">{{ $errors->first('birthdate') }}</span>
                         @endif
@@ -102,7 +102,7 @@
                     <div class="col-md-6">
                         <label for="phone">Telefone</label>
                         <input type="text" class="form-control" id="phone" name="phone"
-                            value="{{ $employee->phone ?? old('phone') }}">
+                            value="{{ $product->phone ?? old('phone') }}">
                         @if ($errors->has('phone'))
                             <span style="color: red;">{{ $errors->first('phone') }}</span>
                         @endif
@@ -111,8 +111,8 @@
                     <div class="col-md-6">
                         <label>Status</label>
                         <select class="form-control" name="is_active" id="is_active">
-                            <option value="0" {{ @$employee->is_active == 0 ? 'selected' : '' }}>Inativo</option>
-                            <option value="1" {{ @$employee->is_active == 1 ? 'selected' : '' }}>Ativo</option>
+                            <option value="0" {{ @$product->is_active == 0 ? 'selected' : '' }}>Inativo</option>
+                            <option value="1" {{ @$product->is_active == 1 ? 'selected' : '' }}>Ativo</option>
                         </select>
                         @if ($errors->has('is_active'))
                             <span style="color: red;">{{ $errors->first('is_active') }}</span>
@@ -122,7 +122,7 @@
                 <br>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Registrar</button>
-                    <a href="{{ route('employee.index') }}" type="button" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ route('product.index') }}" type="button" class="btn btn-secondary">Voltar</a>
                 </div>
             </form>
         </div>

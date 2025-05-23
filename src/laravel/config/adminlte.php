@@ -360,20 +360,20 @@ return [
                                 [
                                     'text' => 'Produtos',
                                     'url' => '/product',
-                                    'icon' => 'fas fa-at',
+                                    'icon' => 'fas fa-headphones',
                                 ],
                             ],
                 ],
                 [
                     'text' => 'Vendas',
                     'url' => '/sale',
-                    'icon' => 'fas fa-map-marker-alt',
+                    'icon' => 'fas fa-user-clock',
                     
                 ],
                 [
                     'text' => 'Pedidos',
                     'url' => '/request',
-                    'icon' => 'fas fa-map-marker-alt',
+                    'icon' => 'fas fa-lightbulb',
                 ],
             ],
         ],
