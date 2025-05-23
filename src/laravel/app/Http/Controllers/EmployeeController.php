@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class EmployeeController extends Controller
@@ -41,7 +42,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('employee.crud');
     }
 
     /**
@@ -49,7 +50,13 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+
+
+        $name = $request->post('name');
+        $email = $request->post('email');
+        $phone = $request->post('phone');
+        $address = $request->post('address');
     }
 
     /**

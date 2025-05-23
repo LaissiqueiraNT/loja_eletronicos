@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastro de Clientes')
+@section('title', 'Cadastro de Funcionários')
 
 @section('content_header')
 @stop
@@ -8,33 +8,33 @@
 @section('content')
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Cadastro de Clientes</h3>
+            <h3 class="card-title">Cadastro de Funcionários</h3>
         </div>
         <div class="card-body">
             <div class="form-group">
 
-                @if (isset($client->id))
-                    <form method="post" action="{{ route('client.update', ['client' => $client->id]) }}">
+                @if (isset($supplier->id))
+                    <form method="post" action="{{ route('supplier.update', ['supplier' => $supplier->id]) }}">
                         @csrf
                         @method('PUT')
                 @else
-                    <form method="post" action="{{ route('client.store') }}">
+                    <form method="post" action="{{ route('supplier.store') }}">
                         @csrf
                 @endif
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="client">Nome Completo</label>
-                        <input type="text" class="form-control" id="client" name="client"
-                            value="{{ $client->client ?? old('client') }}">
-                        @if ($errors->has('client'))
-                            <span style="color: red;">{{ $errors->first('client') }}</span>
+                        <label for="supplier">Nome Completo</label>
+                        <input type="text" class="form-control" id="supplier" name="supplier"
+                            value="{{ $supplier->supplier ?? old('supplier') }}">
+                        @if ($errors->has('supplier'))
+                            <span style="color: red;">{{ $errors->first('supplier') }}</span>
                         @endif
                     </div>
-                <div class="col-md-6">
+                    <div class="col-md-6">
                         <label for="email">Email</label>
                         <input type="text" class="form-control" id="email" name="email"
-                            value="{{ $client->email ?? old('email') }}">
+                            value="{{ $supplier->email ?? old('email') }}">
                         @if ($errors->has('email'))
                             <span style="color: red;">{{ $errors->first('email') }}</span>
                         @endif
@@ -45,7 +45,7 @@
                     <div class="col-md-6">
                         <label for="cep">CEP</label>
                         <input type="text" class="form-control" id="cep" name="cep"
-                            value="{{ $client->cep ?? old('cep') }}">
+                            value="{{ $supplier->cep ?? old('cep') }}">
                         @if ($errors->has('cep'))
                             <span style="color: red;">{{ $errors->first('cep') }}</span>
                         @endif
@@ -53,7 +53,7 @@
                     <div class="col-md-6">
                         <label for="address">Endereço</label>
                         <input type="text" class="form-control" id="address" name="address"
-                            value="{{ $client->address ?? old('address') }}">
+                            value="{{ $supplier->address ?? old('address') }}">
                         @if ($errors->has('address'))
                             <span style="color: red;">{{ $errors->first('address') }}</span>
                         @endif
@@ -64,7 +64,7 @@
                     <div class="col-md-6">
                         <label for="city">Cidade</label>
                         <input type="text" class="form-control" id="city" name="city"
-                            value="{{ $client->city ?? old('city') }}">
+                            value="{{ $supplier->city ?? old('city') }}">
                         @if ($errors->has('city'))
                             <span style="color: red;">{{ $errors->first('city') }}</span>
                         @endif
@@ -72,7 +72,7 @@
                     <div class="col-md-6">
                         <label for="cpf">CPF</label>
                         <input type="text" class="form-control" id="cpf" name="cpf"
-                            value="{{ $client->cpf ?? old('cpf') }}">
+                            value="{{ $supplier->cpf ?? old('cpf') }}">
                         @if ($errors->has('cpf'))
                             <span style="color: red;">{{ $errors->first('cpf') }}</span>
                         @endif
@@ -83,47 +83,46 @@
                     <div class="col-md-6">
                         <label for="rg">RG</label>
                         <input type="text" class="form-control" id="rg" name="rg"
-                            value="{{ $client->rg ?? old('rg') }}">
+                            value="{{ $supplier->rg ?? old('rg') }}">
                         @if ($errors->has('rg'))
                             <span style="color: red;">{{ $errors->first('rg') }}</span>
                         @endif
                     </div>
                     <div class="col-md-6">
+                        <label for="birthdate">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="birthdate" name="birthdate"
+                            value="{{ $supplier->birthdate ?? old('birthdate') }}">
+                        @if ($errors->has('birthdate'))
+                            <span style="color: red;">{{ $errors->first('birthdate') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <br>
+                <div class="row"> 
+                    <div class="col-md-6">
                         <label for="phone">Telefone</label>
                         <input type="text" class="form-control" id="phone" name="phone"
-                            value="{{ $client->phone ?? old('phone') }}">
+                            value="{{ $supplier->phone ?? old('phone') }}">
                         @if ($errors->has('phone'))
                             <span style="color: red;">{{ $errors->first('phone') }}</span>
                         @endif
                     </div>
-                    {{-- <div class="col-md-6">
-                        <label for="birthdate">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="birthdate" name="birthdate"
-                            value="{{ $client->birthdate ?? old('birthdate') }}">
-                        @if ($errors->has('birthdate'))
-                            <span style="color: red;">{{ $errors->first('birthdate') }}</span>
-                        @endif
-                    </div> --}}
-                </div>
-                <br>
                 
-                    
-                
-                    {{-- <div class="col-md-6">
+                    <div class="col-md-6">
                         <label>Status</label>
                         <select class="form-control" name="is_active" id="is_active">
-                            <option value="0" {{ @$client->is_active == 0 ? 'selected' : '' }}>Inativo</option>
-                            <option value="1" {{ @$client->is_active == 1 ? 'selected' : '' }}>Ativo</option>
+                            <option value="0" {{ @$supplier->is_active == 0 ? 'selected' : '' }}>Inativo</option>
+                            <option value="1" {{ @$supplier->is_active == 1 ? 'selected' : '' }}>Ativo</option>
                         </select>
                         @if ($errors->has('is_active'))
                             <span style="color: red;">{{ $errors->first('is_active') }}</span>
                         @endif
-                    </div> --}}
-                   
+                    </div>
+                   </div> 
                 <br>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Registrar</button>
-                    <a href="{{ route('client.index') }}" type="button" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ route('supplier.index') }}" type="button" class="btn btn-secondary">Voltar</a>
                 </div>
             </form>
         </div>

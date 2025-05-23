@@ -341,8 +341,7 @@ return [
         [
             'text' => 'Cadastros',
             'icon' => 'fas fa-pen-alt',
-            'submenu' => [
-                [
+            'submenu' => [[
                     'text' => 'Caracteristicas',
                     'url' => '#',
                     'icon' => 'fas fa-tags',
@@ -362,6 +361,11 @@ return [
                                     'url' => '/product',
                                     'icon' => 'fas fa-headphones',
                                 ],
+                                [
+                                    'text' => 'Fornecedores',
+                                    'url' => '/supplier',
+                                    'icon' => 'fas fa-envelope',
+                                ],
                             ],
                 ],
                 [
@@ -374,8 +378,7 @@ return [
                     'text' => 'Pedidos',
                     'url' => '/request',
                     'icon' => 'fas fa-lightbulb',
-                ],
-            ],
+                ],],
         ],
         // ['header' => 'labels'],
         // [

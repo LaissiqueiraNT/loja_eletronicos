@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
-class ClientController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
+         if ($request->ajax()) {
            
-            $data = Client::latest()->get();
+            $data = Supplier::latest()->get();
             
             return DataTables::of($data)
                 ->addColumn('action', function ($row) {
@@ -35,7 +34,7 @@ class ClientController extends Controller
                 ->make(true);
         }
 
-        return view('clients.index');
+        return view('suppliers.index');
     }
 
     /**
@@ -43,8 +42,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-
-        return view('clients.crud');
+        return view('suppliers.crud');
     }
 
     /**
@@ -52,37 +50,13 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-
-        $name = $request->post('client');
-        $email = $request->post('email');
-        $phone = $request->post('phone');
-        $address = $request->post('address');
-        $cep = $request->post('cep');
-        $city = $request->post('city');
-        $cpf = $request->post('cpf');
-        $rg = $request->post('rg');
-
-        $client = new Client();
-        $client->name = $name;
-        $client->email = $email;
-        $client->phone = $phone;
-        $client->cep = $cep;
-        $client->address = $address;
-        $client->city = $city;
-        $client->cpf = $cpf;
-        $client->rg = $rg;
-        $client->origin_user = $user->name;
-        $client->last_user = $user->name;
-        $client->save();
-
-        return view('clients.index');
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(string $id)
     {
         //
     }
@@ -90,7 +64,7 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(string $id)
     {
         //
     }
@@ -98,7 +72,7 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -106,7 +80,7 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy(string $id)
     {
         //
     }

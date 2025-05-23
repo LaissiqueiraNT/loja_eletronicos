@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastro de Produtos')
+@section('title', 'Cadastro de Fornecedores')
 
 @section('content_header')
-<h1>Produtos</h1>
+<h1>Fornecedores</h1>
 @stop
 
 @section('plugins.Datatables', true)
@@ -11,19 +11,19 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Lista de Produtos</h3>
+        <h3 class="card-title">Lista de Fornecedores</h3>
     </div>
 
     <div class="card-body">
         <div>
-            <a href="{{ route('product.create') }}" type="button" class="btn btn-primary" style="width:80px;">Novo</a>
+            <a href="{{ route('supplier.create') }}" type="button" class="btn btn-primary" style="width:80px;">Novo</a>
         </div>
         <br>
-        <table class="table table-bordered table-striped dataTable dtr-inline" id="product" style="font-size: 13px;">
+        <table class="table table-bordered table-striped dataTable dtr-inline" id="supplier" style="font-size: 13px;">
             <thead>
                 <tr>
                     <th style="width: 5%">Id</th>
-                    <th style="width: 50%">Produtos</th>
+                    <th style="width: 50%">Fornecedores</th>
                     <th style="width: 10%">Status</th>
                     <th style="width: 15%">Ações</th>
                 </tr>
@@ -48,13 +48,13 @@
 <script>
     $(document).ready(function () {
 
-        $('#client').DataTable({
+        $('#supplier').DataTable({
             language: {
                 "url": "{{ asset('js/pt-br.json') }}"
             },
             processing: true,
             serverSide: true,
-            ajax: "{{ route('client.index') }}",
+            ajax: "{{ route('supplier.index') }}",
             columns: [{
                 data: 'id',
                 name: 'id'

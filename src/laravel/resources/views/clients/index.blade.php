@@ -23,8 +23,9 @@
             <thead>
                 <tr>
                     <th style="width: 5%">Id</th>
-                    <th style="width: 50%">Clientes</th>
-                    <th style="width: 10%">Status</th>
+                    <th style="width: 20%">Clientes</th>
+                    <th style="width: 25%">Email</th>
+                    <th style="width: 15%">Telefone</th>
                     <th style="width: 15%">Ações</th>
                 </tr>
             </thead>
@@ -60,16 +61,24 @@
                 name: 'id'
             },
             {
-                data: 'power_supplier',
-                name: 'power_supplier'
+                data: 'name',
+                name: 'Cliente'
             },
             {
-                data: 'is_active',
-                name: 'is_active',
-                render: function (data, type, row) {
-                    return data ? 'Ativo' : 'Inativo';
-                }
+                data: 'email',
+                name: 'E-mail'
             },
+            {
+                data: 'phone',
+                name: 'Telefone'
+            },
+            // {
+            //     data: '',
+            //     name: 'is_active',
+            //     render: function (data, type, row) {
+            //         return data ? 'Ativo' : 'Inativo';
+            //     }
+            // },
             { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });

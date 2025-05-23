@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastro de Funcionários')
+@section('title', 'Cadastro de Produtos')
 
 @section('content_header')
 @stop
@@ -8,7 +8,7 @@
 @section('content')
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Cadastro de Funcionários</h3>
+            <h3 class="card-title">Cadastro de Produtos</h3>
         </div>
         <div class="card-body">
             <div class="form-group">

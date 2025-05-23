@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -41,7 +42,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.crud');
     }
 
     /**
@@ -49,7 +50,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $name = $request->post('name');
     }
 
     /**
