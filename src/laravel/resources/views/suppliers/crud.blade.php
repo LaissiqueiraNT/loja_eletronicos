@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastro de Funcionários')
+@section('title', 'Cadastro de Fornecedores')
 
 @section('content_header')
 @stop
@@ -8,13 +8,13 @@
 @section('content')
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Cadastro de Funcionários</h3>
+            <h3 class="card-title">Cadastro de Fornecedores</h3>
         </div>
         <div class="card-body">
             <div class="form-group">
 
-                @if (isset($supplier->id))
-                    <form method="post" action="{{ route('supplier.update', ['supplier' => $supplier->id]) }}">
+                @if (isset($edit->id))
+                    <form method="post" action="{{ route('supplier.update', ['supplier' => $edit->id]) }}">
                         @csrf
                         @method('PUT')
                 @else
@@ -24,17 +24,17 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="supplier">Nome Completo</label>
-                        <input type="text" class="form-control" id="supplier" name="supplier"
-                            value="{{ $supplier->supplier ?? old('supplier') }}">
-                        @if ($errors->has('supplier'))
-                            <span style="color: red;">{{ $errors->first('supplier') }}</span>
+                        <label for="name">Empresa</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="{{ $edit->name ?? old('name') }}">
+                        @if ($errors->has('name'))
+                            <span style="color: red;">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
                     <div class="col-md-6">
                         <label for="email">Email</label>
                         <input type="text" class="form-control" id="email" name="email"
-                            value="{{ $supplier->email ?? old('email') }}">
+                            value="{{ $edit->email ?? old('email') }}">
                         @if ($errors->has('email'))
                             <span style="color: red;">{{ $errors->first('email') }}</span>
                         @endif
@@ -43,82 +43,43 @@
                 <br>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="cep">CEP</label>
-                        <input type="text" class="form-control" id="cep" name="cep"
-                            value="{{ $supplier->cep ?? old('cep') }}">
-                        @if ($errors->has('cep'))
-                            <span style="color: red;">{{ $errors->first('cep') }}</span>
-                        @endif
-                    </div>
-                    <div class="col-md-6">
-                        <label for="address">Endereço</label>
-                        <input type="text" class="form-control" id="address" name="address"
-                            value="{{ $supplier->address ?? old('address') }}">
-                        @if ($errors->has('address'))
-                            <span style="color: red;">{{ $errors->first('address') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="city">Cidade</label>
-                        <input type="text" class="form-control" id="city" name="city"
-                            value="{{ $supplier->city ?? old('city') }}">
-                        @if ($errors->has('city'))
-                            <span style="color: red;">{{ $errors->first('city') }}</span>
-                        @endif
-                    </div>
-                    <div class="col-md-6">
-                        <label for="cpf">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf"
-                            value="{{ $supplier->cpf ?? old('cpf') }}">
-                        @if ($errors->has('cpf'))
-                            <span style="color: red;">{{ $errors->first('cpf') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="rg">RG</label>
-                        <input type="text" class="form-control" id="rg" name="rg"
-                            value="{{ $supplier->rg ?? old('rg') }}">
-                        @if ($errors->has('rg'))
-                            <span style="color: red;">{{ $errors->first('rg') }}</span>
-                        @endif
-                    </div>
-                    <div class="col-md-6">
-                        <label for="birthdate">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="birthdate" name="birthdate"
-                            value="{{ $supplier->birthdate ?? old('birthdate') }}">
-                        @if ($errors->has('birthdate'))
-                            <span style="color: red;">{{ $errors->first('birthdate') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <br>
-                <div class="row"> 
-                    <div class="col-md-6">
                         <label for="phone">Telefone</label>
                         <input type="text" class="form-control" id="phone" name="phone"
-                            value="{{ $supplier->phone ?? old('phone') }}">
+                            value="{{ $edit->phone ?? old('phone') }}">
                         @if ($errors->has('phone'))
                             <span style="color: red;">{{ $errors->first('phone') }}</span>
                         @endif
                     </div>
-                
+                    <div class="col-md-6">
+                        <label for="cnpj">CNPJ</label>
+                        <input type="text" class="form-control" id="cnpj" name="cnpj"
+                            value="{{ $edit->cnpj ?? old('cnpj') }}">
+                        @if ($errors->has('cnpj'))
+                            <span style="color: red;">{{ $errors->first('cnpj') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="address">Endereço</label>
+                        <input type="text" class="form-control" id="address" placeholder="Cidade(Estado), " name="address"
+                            value="{{ $edit->address ?? old('address') }}">
+                        @if ($errors->has('address'))
+                            <span style="color: red;">{{ $errors->first('address') }}</span>
+                        @endif
+                    </div>
                     <div class="col-md-6">
                         <label>Status</label>
                         <select class="form-control" name="is_active" id="is_active">
-                            <option value="0" {{ @$supplier->is_active == 0 ? 'selected' : '' }}>Inativo</option>
-                            <option value="1" {{ @$supplier->is_active == 1 ? 'selected' : '' }}>Ativo</option>
+                            <option value="0" {{ @$edit->is_active == 0 ? 'selected' : '' }}>Inativo</option>
+                            <option value="1" {{ @$edit->is_active == 1 ? 'selected' : '' }}>Ativo</option>
                         </select>
                         @if ($errors->has('is_active'))
                             <span style="color: red;">{{ $errors->first('is_active') }}</span>
                         @endif
                     </div>
-                   </div> 
+                </div>
                 <br>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Registrar</button>
@@ -134,14 +95,12 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('vendor/jquery/jquery.maskedinput.min.js') }}"></script>
-    <script src="{{ asset('vendor/jquery/jquery.maskMoney.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
-             $("#cpf").mask("999.999.999-99");
+             $("#cnpj").mask("99.999.999/9999-99");
+             $("#phone").mask("(99) 99999-9999");
         });
-        
     </script>
 @stop

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('type')->default('general');
             $table->integer('quantity')->default(0)->nullable();
-            $table->decimal('price', 10, 2);
-            $table->string('brand')->nullable();
+            $table->decimal('unit_price', 10, 2);
+            $table->decimal('total_price', 10, 2);
             $table->string('origin_user')->nullable();
             $table->string('last_user')->nullable();
             $table->timestamps();

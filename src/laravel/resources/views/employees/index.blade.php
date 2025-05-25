@@ -23,7 +23,8 @@
             <thead>
                 <tr>
                     <th style="width: 5%">Id</th>
-                    <th style="width: 50%">Funcionários</th>
+                    <th style="width: 30%">Funcionários</th>
+                    <th style="width: 20%">Cargo</th>
                     <th style="width: 10%">Status</th>
                     <th style="width: 15%">Ações</th>
                 </tr>
@@ -48,20 +49,27 @@
 <script>
     $(document).ready(function () {
 
-        $('#client').DataTable({
+        $('#employee').DataTable({
             language: {
                 "url": "{{ asset('js/pt-br.json') }}"
             },
             processing: true,
             serverSide: true,
-            ajax: "{{ route('client.index') }}",
+            ajax: "{{ route('employee.index') }}",
             columns: [{
                 data: 'id',
                 name: 'id'
             },
             {
-                data: 'power_supplier',
-                name: 'power_supplier'
+                data: 'name',
+                name: 'Funcionario'
+            },
+            {
+                data: 'role_id',
+                name: 'Cargo',
+                render: function (data, type, row) {
+                    return data ? 'Admin' : 'Funcionário';
+                }
             },
             {
                 data: 'is_active',

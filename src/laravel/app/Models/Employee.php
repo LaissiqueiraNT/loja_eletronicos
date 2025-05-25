@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+// namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Model;
 
-class Employee extends Model
-{
-    protected $table = 'employees';
-    protected $guarded = ['id'];
+// class Employee extends Model
+// {
+//     protected $table = 'employees';
+//     protected $guarded = ['id'];
 
-}
+// }

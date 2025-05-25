@@ -299,104 +299,59 @@ return [
     */
 
     'menu' => [
-        // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'Pesquisar',
-            'topnav_right' => true,
-        ],
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
-
-        // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'Pesquisar',
-        ],
-        // [
-        //     'text' => 'blog',
-        //     'url' => 'admin/blog',
-        //     'can' => 'manage-blog',
-        // ],
-        // [
-        //     'text' => 'pages',
-        //     'url' => 'admin/pages',
-        //     'icon' => 'far fa-fw fa-file',
-        //     'label' => 4,
-        //     'label_color' => 'success',
-        // ],
-        // ['header' => 'account_settings'],
-        // [
-        //     'text' => 'profile',
-        //     'url' => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-user',
-        // ],
-        // [
-        //     'text' => 'change_password',
-        //     'url' => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
-        [
-            'text' => 'Cadastros',
-            'icon' => 'fas fa-pen-alt',
-            'submenu' => [[
-                    'text' => 'Caracteristicas',
-                    'url' => '#',
-                    'icon' => 'fas fa-tags',
-                    'submenu' => [
-                                [
-                                    'text' => 'Clientes',
-                                    'url' => '/client',
-                                    'icon' => 'fas fa-user-edit',
-                                ],
-                                [
-                                    'text' => 'Funcionarios',
-                                    'url' => '/employee',
-                                    'icon' => 'fas fa-hands-helping',
-                                ],
-                                [
-                                    'text' => 'Produtos',
-                                    'url' => '/product',
-                                    'icon' => 'fas fa-headphones',
-                                ],
-                                [
-                                    'text' => 'Fornecedores',
-                                    'url' => '/supplier',
-                                    'icon' => 'fas fa-envelope',
-                                ],
-                            ],
-                ],
-                [
-                    'text' => 'Vendas',
-                    'url' => '/sale',
-                    'icon' => 'fas fa-user-clock',
-                    
-                ],
-                [
-                    'text' => 'Pedidos',
-                    'url' => '/request',
-                    'icon' => 'fas fa-lightbulb',
-                ],],
-        ],
-        // ['header' => 'labels'],
-        // [
-        //     'text' => 'important',
-        //     'icon_color' => 'red',
-        //     'url' => '#',
-        // ],
-        // [
-        //     'text' => 'warning',
-        //     'icon_color' => 'yellow',
-        //     'url' => '#',
-        // ],
-        // [
-        //     'text' => 'information',
-        //     'icon_color' => 'cyan',
-        //     'url' => '#',
-        // ],
+    // Navbar items:
+    [
+        'type' => 'navbar-search',
+        'text' => 'Pesquisar',
+        'topnav_right' => true,
     ],
+    [
+        'type' => 'fullscreen-widget',
+        'topnav_right' => true,
+    ],
+
+    // Sidebar items:
+    [
+        'type' => 'sidebar-menu-search',
+        'text' => 'Pesquisar',
+    ],
+    [
+        'text' => 'Cadastros',
+        'icon' => 'fas fa-pen-alt',
+        'submenu' => [
+            [
+                'text' => 'Clientes',
+                'url' => '/client',
+                'icon' => 'fas fa-user-edit',
+            ],
+            [
+                'text' => 'Funcionarios',
+                'url' => '/employee',
+                'icon' => 'fas fa-hands-helping',
+            ],
+            [
+                'text' => 'Produtos',
+                'url' => '/product',
+                'icon' => 'fas fa-headphones',
+            ],
+            [
+                'text' => 'Fornecedores',
+                'url' => '/supplier',
+                'icon' => 'fas fa-envelope',
+            ],
+            [
+                'text' => 'Vendas',
+                'url' => '/sale',
+                'icon' => 'fas fa-user-clock',
+            ],
+            [
+                'text' => 'Pedidos',
+                'url' => '/request',
+                'icon' => 'fas fa-lightbulb',
+            ],
+        ],
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------

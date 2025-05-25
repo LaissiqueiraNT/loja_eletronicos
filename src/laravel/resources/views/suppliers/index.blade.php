@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Cadastro de Fornecedores')
+@section('title', 'Cadastro de Fornecedor')
 
 @section('content_header')
-<h1>Fornecedores</h1>
+<h1>Fornecedor</h1>
 @stop
 
 @section('plugins.Datatables', true)
@@ -11,7 +11,7 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Lista de Fornecedores</h3>
+        <h3 class="card-title">Lista de Fornecedor</h3>
     </div>
 
     <div class="card-body">
@@ -23,7 +23,7 @@
             <thead>
                 <tr>
                     <th style="width: 5%">Id</th>
-                    <th style="width: 50%">Fornecedores</th>
+                    <th style="width: 50%">Fornecedor</th>
                     <th style="width: 10%">Status</th>
                     <th style="width: 15%">Ações</th>
                 </tr>
@@ -60,8 +60,8 @@
                 name: 'id'
             },
             {
-                data: 'power_supplier',
-                name: 'power_supplier'
+                data: 'name',
+                name: 'Fornecedor'
             },
             {
                 data: 'is_active',

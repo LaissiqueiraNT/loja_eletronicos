@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Employee;
 use App\Models\Sale;
+use App\Models\Client;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -14,11 +17,13 @@ class SaleController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-        $data = Sale::latest()->get();
+           $data = Sale::with(['client', 'employee'])->select('sales.*');
+            return DataTables::of($data)
+                ->addColumn('client_name', fn($row) => $row->client->name ?? '')
+                ->addColumn('employee_name', fn($row) => $row->employee->name ?? '')
 
-        return DataTables::of($data)
-            ->addColumn('action', function ($row) {
-                $actionBtns = '
+                ->addColumn('action', function ($row) {
+                    $actionBtns = '
                     <a href="' . route("sale.edit", $row->id) . '" class="btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
                     
                     <form action="' . route("sale.destroy", $row->id) . '" method="POST" style="display:inline" onsubmit="return confirm(\'Deseja realmente excluir este registro?\')">
@@ -27,13 +32,13 @@ class SaleController extends Controller
                         <button type="submit" class="btn btn-outline-danger btn-sm ml-2"><i class="fas fa-trash"></i></button>
                     </form>
                 ';
-                return $actionBtns;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-    }
+                    return $actionBtns;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
-    return view('sales.index');
+        return view('sales.index');
     }
 
     /**
@@ -41,7 +46,8 @@ class SaleController extends Controller
      */
     public function create()
     {
-        //
+           return view('sales.crud', compact('clients', 'employees'));
+
     }
 
     /**

@@ -13,8 +13,8 @@
         <div class="card-body">
             <div class="form-group">
 
-                @if (isset($client->id))
-                    <form method="post" action="{{ route('client.update', ['client' => $client->id]) }}">
+                @if (isset($edit->id))
+                    <form method="post" action="{{ route('client.update', ['client' => $edit->id]) }}">
                         @csrf
                         @method('PUT')
                 @else
@@ -26,7 +26,7 @@
                     <div class="col-md-6">
                         <label for="client">Nome Completo</label>
                         <input type="text" class="form-control" id="client" name="client"
-                            value="{{ $client->client ?? old('client') }}">
+                            value="{{ $edit->name ?? old('client') }}">
                         @if ($errors->has('client'))
                             <span style="color: red;">{{ $errors->first('client') }}</span>
                         @endif
@@ -34,7 +34,7 @@
                 <div class="col-md-6">
                         <label for="email">Email</label>
                         <input type="text" class="form-control" id="email" name="email"
-                            value="{{ $client->email ?? old('email') }}">
+                            value="{{ $edit->email ?? old('email') }}">
                         @if ($errors->has('email'))
                             <span style="color: red;">{{ $errors->first('email') }}</span>
                         @endif
@@ -45,7 +45,7 @@
                     <div class="col-md-6">
                         <label for="cep">CEP</label>
                         <input type="text" class="form-control" id="cep" name="cep"
-                            value="{{ $client->cep ?? old('cep') }}">
+                            value="{{ $edit->cep ?? old('cep') }}">
                         @if ($errors->has('cep'))
                             <span style="color: red;">{{ $errors->first('cep') }}</span>
                         @endif
@@ -53,7 +53,7 @@
                     <div class="col-md-6">
                         <label for="address">Endereço</label>
                         <input type="text" class="form-control" id="address" name="address"
-                            value="{{ $client->address ?? old('address') }}">
+                            value="{{ $edit->address ?? old('address') }}">
                         @if ($errors->has('address'))
                             <span style="color: red;">{{ $errors->first('address') }}</span>
                         @endif
@@ -64,7 +64,7 @@
                     <div class="col-md-6">
                         <label for="city">Cidade</label>
                         <input type="text" class="form-control" id="city" name="city"
-                            value="{{ $client->city ?? old('city') }}">
+                            value="{{ $edit->city ?? old('city') }}">
                         @if ($errors->has('city'))
                             <span style="color: red;">{{ $errors->first('city') }}</span>
                         @endif
@@ -72,7 +72,7 @@
                     <div class="col-md-6">
                         <label for="cpf">CPF</label>
                         <input type="text" class="form-control" id="cpf" name="cpf"
-                            value="{{ $client->cpf ?? old('cpf') }}">
+                            value="{{ $edit->cpf ?? old('cpf') }}">
                         @if ($errors->has('cpf'))
                             <span style="color: red;">{{ $errors->first('cpf') }}</span>
                         @endif
@@ -83,7 +83,7 @@
                     <div class="col-md-6">
                         <label for="rg">RG</label>
                         <input type="text" class="form-control" id="rg" name="rg"
-                            value="{{ $client->rg ?? old('rg') }}">
+                            value="{{ $edit->rg ?? old('rg') }}">
                         @if ($errors->has('rg'))
                             <span style="color: red;">{{ $errors->first('rg') }}</span>
                         @endif
@@ -91,7 +91,7 @@
                     <div class="col-md-6">
                         <label for="phone">Telefone</label>
                         <input type="text" class="form-control" id="phone" name="phone"
-                            value="{{ $client->phone ?? old('phone') }}">
+                            value="{{ $edit->phone ?? old('phone') }}">
                         @if ($errors->has('phone'))
                             <span style="color: red;">{{ $errors->first('phone') }}</span>
                         @endif
@@ -135,9 +135,8 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('vendor/jquery/jquery.maskedinput.min.js') }}"></script>
-    <script src="{{ asset('vendor/jquery/jquery.maskMoney.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskMoney/3.0.2/jquery.maskMoney.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {

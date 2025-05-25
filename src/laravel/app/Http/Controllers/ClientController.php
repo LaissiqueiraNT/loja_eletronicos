@@ -90,24 +90,57 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit($id)
     {
-        //
+        $edit = Client::find($id);
+
+        $output = array(
+            'edit' => $edit,
+        );
+
+        return view('clients.crud', $output);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $user = Auth::user();
+
+        $name = $request->post('client');
+        $email = $request->post('email');
+        $phone = $request->post('phone');
+        $address = $request->post('address');
+        $cep = $request->post('cep');
+        $city = $request->post('city');
+        $cpf = $request->post('cpf');
+        $rg = $request->post('rg');
+
+        $client = Client::find($id);
+        
+        $client->name = $name;
+        $client->email = $email;
+        $client->phone = $phone;
+        $client->cep = $cep;
+        $client->address = $address;
+        $client->city = $city;
+        $client->cpf = $cpf;
+        $client->rg = $rg;
+        $client->origin_user = $user->name;
+        $client->last_user = $user->name;
+        $client->update();
+        return view ('clients.index');
+        }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy($id)
     {
-        //
+        $client = Client::find($id);
+        $client->delete();
+
+        return view ('clients.index');
     }
 }

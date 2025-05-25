@@ -13,28 +13,28 @@
         <div class="card-body">
             <div class="form-group">
 
-                @if (isset($employee->id))
-                    <form method="post" action="{{ route('employee.update', ['employee' => $employee->id]) }}">
+                @if (isset($edit->id))
+                    <form method="post" action="{{ route('employee.update', ['employee' => $edit->id]) }}">
                         @csrf
                         @method('PUT')
-                @else
-                    <form method="post" action="{{ route('employee.store') }}">
-                        @csrf
+                    @else
+                        <form method="post" action="{{ route('employee.store') }}">
+                            @csrf
                 @endif
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="employee">Nome Completo</label>
-                        <input type="text" class="form-control" id="employee" name="employee"
-                            value="{{ $employee->employee ?? old('employee') }}">
-                        @if ($errors->has('employee'))
-                            <span style="color: red;">{{ $errors->first('employee') }}</span>
+                        <label for="name">Nome Completo</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="{{ $edit->name ?? old('name') }}">
+                        @if ($errors->has('name'))
+                            <span style="color: red;">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
                     <div class="col-md-6">
                         <label for="email">Email</label>
                         <input type="text" class="form-control" id="email" name="email"
-                            value="{{ $employee->email ?? old('email') }}">
+                            value="{{ $edit->email ?? old('email') }}">
                         @if ($errors->has('email'))
                             <span style="color: red;">{{ $errors->first('email') }}</span>
                         @endif
@@ -43,105 +43,86 @@
                 <br>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="cep">CEP</label>
-                        <input type="text" class="form-control" id="cep" name="cep"
-                            value="{{ $employee->cep ?? old('cep') }}">
-                        @if ($errors->has('cep'))
-                            <span style="color: red;">{{ $errors->first('cep') }}</span>
+                        <label for="password">Senha</label>
+                        <div style="position: relative;">
+                            <input type="password" class="form-control" id="password" name="password"
+                                value="{{ $edit->password ?? old('password') }}">
+                            <button id="eye" type="button"
+                                style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: none; border: none; padding: 0; cursor: pointer;">
+                                <img id="open" src="{{ asset('vendor/adminlte/dist/img/open.png') }}" alt="eye"
+                                    style="width: 25px; height: 25px;">
+                            </button>
+                        </div>
+                        @if ($errors->has('password'))
+                            <span style="color: red;">{{ $errors->first('password') }}</span>
                         @endif
                     </div>
                     <div class="col-md-6">
-                        <label for="address">Endereço</label>
-                        <input type="text" class="form-control" id="address" name="address"
-                            value="{{ $employee->address ?? old('address') }}">
-                        @if ($errors->has('address'))
-                            <span style="color: red;">{{ $errors->first('address') }}</span>
+                        <label for="address">Cargo</label>
+                        <select class="form-control" name="role" id="role">
+                            <option value="0" {{ @$edit->role == 0 ? 'selected' : '' }}>Admin</option>
+                            <option value="1" {{ @$edit->role == 1 ? 'selected' : '' }}>Funcionário</option>
+                        </select>
+                        @if ($errors->has('role'))
+                            <span style="color: red;">{{ $errors->first('role') }}</span>
                         @endif
+
+
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="city">Cidade</label>
-                        <input type="text" class="form-control" id="city" name="city"
-                            value="{{ $employee->city ?? old('city') }}">
-                        @if ($errors->has('city'))
-                            <span style="color: red;">{{ $errors->first('city') }}</span>
-                        @endif
-                    </div>
-                    <div class="col-md-6">
-                        <label for="cpf">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf"
-                            value="{{ $employee->cpf ?? old('cpf') }}">
-                        @if ($errors->has('cpf'))
-                            <span style="color: red;">{{ $errors->first('cpf') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="rg">RG</label>
-                        <input type="text" class="form-control" id="rg" name="rg"
-                            value="{{ $employee->rg ?? old('rg') }}">
-                        @if ($errors->has('rg'))
-                            <span style="color: red;">{{ $errors->first('rg') }}</span>
-                        @endif
-                    </div>
-                    <div class="col-md-6">
-                        <label for="birthdate">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="birthdate" name="birthdate"
-                            value="{{ $employee->birthdate ?? old('birthdate') }}">
-                        @if ($errors->has('birthdate'))
-                            <span style="color: red;">{{ $errors->first('birthdate') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <br>
-                <div class="row"> 
-                    <div class="col-md-6">
-                        <label for="phone">Telefone</label>
-                        <input type="text" class="form-control" id="phone" name="phone"
-                            value="{{ $employee->phone ?? old('phone') }}">
-                        @if ($errors->has('phone'))
-                            <span style="color: red;">{{ $errors->first('phone') }}</span>
-                        @endif
-                    </div>
-                
                     <div class="col-md-6">
                         <label>Status</label>
                         <select class="form-control" name="is_active" id="is_active">
-                            <option value="0" {{ @$employee->is_active == 0 ? 'selected' : '' }}>Inativo</option>
-                            <option value="1" {{ @$employee->is_active == 1 ? 'selected' : '' }}>Ativo</option>
+                            <option value="0" {{ @$edit->is_active == 0 ? 'selected' : '' }}>Inativo</option>
+                            <option value="1" {{ @$edit->is_active == 1 ? 'selected' : '' }}>Ativo</option>
                         </select>
                         @if ($errors->has('is_active'))
                             <span style="color: red;">{{ $errors->first('is_active') }}</span>
                         @endif
                     </div>
-                   </div> 
+                </div>
                 <br>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Registrar</button>
                     <a href="{{ route('employee.index') }}" type="button" class="btn btn-secondary">Voltar</a>
                 </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-@stop
+    @stop
 
-@section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@stop
+    @section('css')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    @stop
 
-@section('js')
-    <script src="{{ asset('vendor/jquery/jquery.maskedinput.min.js') }}"></script>
-    <script src="{{ asset('vendor/jquery/jquery.maskMoney.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-             $("#cpf").mask("999.999.999-99");
-        });
-        
-    </script>
-@stop
+    @section('js')
+        <script src="{{ asset('vendor/jquery/jquery.maskedinput.min.js') }}"></script>
+        <script src="{{ asset('vendor/jquery/jquery.maskMoney.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#cpf").mask("999.999.999-99");
+
+                const button = document.getElementById('eye');
+                const input = document.getElementById('password');
+                const img = document.getElementById('open');
+
+                if (button && input && img) {
+                    button.addEventListener('click', function() {
+                        if (input.type === 'password') {
+                            input.type = 'text';
+                            img.src = "{{ asset('vendor/adminlte/dist/img/close.png') }}";
+                        } else {
+                            input.type = 'password';
+                            img.src = "{{ asset('vendor/adminlte/dist/img/open.png') }}";
+                        }
+                    });
+                } else {
+                    console.error('Botão ou input não encontrados.');
+                }
+            });
+        </script>
+    @stop

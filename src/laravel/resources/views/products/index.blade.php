@@ -23,8 +23,8 @@
             <thead>
                 <tr>
                     <th style="width: 5%">Id</th>
-                    <th style="width: 50%">Produtos</th>
-                    <th style="width: 10%">Status</th>
+                    <th style="width: 40%">Produtos</th>
+                    <th style="width: 20%">Fornecedor</th>
                     <th style="width: 15%">Ações</th>
                 </tr>
             </thead>
@@ -48,27 +48,24 @@
 <script>
     $(document).ready(function () {
 
-        $('#client').DataTable({
+        $('#product').DataTable({
             language: {
                 "url": "{{ asset('js/pt-br.json') }}"
             },
             processing: true,
             serverSide: true,
-            ajax: "{{ route('client.index') }}",
+            ajax: "{{ route('product.index') }}",
             columns: [{
                 data: 'id',
                 name: 'id'
             },
             {
-                data: 'power_supplier',
-                name: 'power_supplier'
+                data: 'name',
+                name: 'Produto'
             },
             {
-                data: 'is_active',
-                name: 'is_active',
-                render: function (data, type, row) {
-                    return data ? 'Ativo' : 'Inativo';
-                }
+                data: 'supplier_name',
+                name: 'Fornecedor',
             },
             { data: 'action', name: 'action', orderable: false, searchable: false }
             ]

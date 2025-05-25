@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -15,7 +15,7 @@ class EmployeeController extends Controller
   public function index(Request $request)
 {
     if ($request->ajax()) {
-        $data = Employee::latest()->get();
+        $data = User::latest()->get();
 
         return DataTables::of($data)
             ->addColumn('action', function ($row) {
@@ -42,7 +42,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employee.crud');
+        return view('employees.crud');
     }
 
     /**
@@ -55,14 +55,22 @@ class EmployeeController extends Controller
 
         $name = $request->post('name');
         $email = $request->post('email');
-        $phone = $request->post('phone');
-        $address = $request->post('address');
+        $password = $request->post('password');
+        $role = $request->post('role');
+
+        $user = new User();
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = bcrypt($password);
+        $user->role_id = $role;
+        $user->save();
+        return redirect()->route('employee.index')->with('success', 'Funcionário cadastrado com sucesso!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         //
     }
@@ -70,24 +78,44 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $edit = User::find($id);
+
+        $output = [
+            'edit' => $edit,
+        ];
+        return view('employees.crud', $output);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+
+        $name = $request->post('name');
+        $email = $request->post('email');
+        $password = $request->post('password');
+        $role = $request->post('role');
+
+        $employee = User::find($id);
+
+        $employee->name = $name;
+        $employee->email = $email;
+        $employee->password = bcrypt($password);
+        $employee->role_id = $role;
+        $employee->update();
+        return view('employees.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return view('employees.index');
     }
 }
