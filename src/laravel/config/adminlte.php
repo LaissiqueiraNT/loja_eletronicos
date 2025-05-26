@@ -344,11 +344,11 @@ return [
                 'url' => '/sale',
                 'icon' => 'fas fa-user-clock',
             ],
-            [
-                'text' => 'Pedidos',
-                'url' => '/request',
-                'icon' => 'fas fa-lightbulb',
-            ],
+            // [
+            //     'text' => 'Pedidos',
+            //     'url' => '/request',
+            //     'icon' => 'fas fa-lightbulb',
+            // ],
         ],
     ],
 ],

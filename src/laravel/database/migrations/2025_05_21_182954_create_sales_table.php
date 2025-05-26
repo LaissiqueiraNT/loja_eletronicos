@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->nullable()->constrained('clients');
-            $table->foreignId('employee_id')->nullable()->constrained('users');
+            $table->foreignId('client_id')->nullable()->constrained('clients')->nullOnDelete();
+            $table->foreignId('employee_id')->nullable()->constrained('users')->nullOnDelete();
             $table->date('sale_date')->nullable();
-            $table->decimal('total_price', 10, 2);
+            $table->decimal('total_price', 10, 2)->nullable();
             $table->string('payment_method')->nullable();
-            $table->string('status')->default('Pendente');
+            $table->enum('status', ['Pendente', 'Pago', 'Cancelado'])->default('Pendente');
             $table->timestamps();
         });
     }

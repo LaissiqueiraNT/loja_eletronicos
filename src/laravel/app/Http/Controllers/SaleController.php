@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Employee;
 use App\Models\Sale;
 use App\Models\Client;
 use App\Models\Employee;
@@ -55,13 +54,28 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client_id = $request->post('client_id');
+        $employee_id = $request->post('employee_id');
+        $sale_date = $request->post('sale_date');
+        $total_price = $request->post('total_price');
+        $payment_method = $request->post('payment_method');
+        $status = $request->post('status');
+
+        $sale = new Sale();
+        $sale->client_id = $client_id;
+        $sale->employee_id = $employee_id;
+        $sale->sale_date = $sale_date;
+        $sale->total_price = $total_price;
+        $sale->payment_method = $payment_method;
+        $sale->status = $status;
+        $sale->save();
+        return redirect()->route('sale.index')->with('success', 'Venda criada com sucesso!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         //
     }
@@ -69,24 +83,41 @@ class SaleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $sale = Sale::find($id);
+        $clients = Client::all();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $client_id = $request->post('client_id');
+        $employee_id = $request->post('employee_id');
+        $sale_date = $request->post('sale_date');
+        $total_price = $request->post('total_price');
+        $payment_method = $request->post('payment_method');
+        $status = $request->post('status');
+        $sale = Sale::find($id);
+        $sale->client_id = $client_id;
+        $sale->employee_id = $employee_id;
+        $sale->sale_date = $sale_date;
+        $sale->total_price = $total_price;
+        $sale->payment_method = $payment_method;
+        $sale->status = $status;
+        $sale->update();
+        return redirect()->route('sale.index')->with('success', 'Venda atualizada com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $sale = Sale::find($id);
+        $sale->delete();
+        return redirect()->route('sale.index')->with('error', 'Venda não encontrada!');
     }
 }
