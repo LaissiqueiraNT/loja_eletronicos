@@ -19,6 +19,8 @@ return new class extends Migration
             $table->decimal('total_price', 10, 2)->nullable();
             $table->string('payment_method')->nullable();
             $table->enum('status', ['Pendente', 'Pago', 'Cancelado'])->default('Pendente');
+            $table->string('origin_user')->nullable();
+            $table->string('last_user')->nullable();
             $table->timestamps();
         });
     }

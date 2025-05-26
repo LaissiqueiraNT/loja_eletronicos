@@ -134,5 +134,7 @@
                 affixesStay: false
             });
         });
+        
+        
     </script>
 @stop

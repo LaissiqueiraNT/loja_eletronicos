@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Sale;
 use App\Models\Client;
-use App\Models\Employee;
+use App\Models\Request_item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class SaleController extends Controller
@@ -16,7 +17,7 @@ class SaleController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-           $data = Sale::with(['client', 'employee'])->select('sales.*');
+            $data = Sale::with(['client', 'employee'])->select('sales.*');
             return DataTables::of($data)
                 ->addColumn('client_name', fn($row) => $row->client->name ?? '')
                 ->addColumn('employee_name', fn($row) => $row->employee->name ?? '')
@@ -45,8 +46,7 @@ class SaleController extends Controller
      */
     public function create()
     {
-           return view('sales.crud', compact('clients', 'employees'));
-
+        return view('sales.crud', compact('clients', 'employees'));
     }
 
     /**
@@ -54,22 +54,37 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        $client_id = $request->post('client_id');
-        $employee_id = $request->post('employee_id');
-        $sale_date = $request->post('sale_date');
-        $total_price = $request->post('total_price');
-        $payment_method = $request->post('payment_method');
-        $status = $request->post('status');
+        DB::beginTransaction();
 
-        $sale = new Sale();
-        $sale->client_id = $client_id;
-        $sale->employee_id = $employee_id;
-        $sale->sale_date = $sale_date;
-        $sale->total_price = $total_price;
-        $sale->payment_method = $payment_method;
-        $sale->status = $status;
-        $sale->save();
-        return redirect()->route('sale.index')->with('success', 'Venda criada com sucesso!');
+        try {
+            // Cria a venda
+            $sale = Sale::create([
+                'client_id'      => $request->client_id,
+                'employee_id'    => $request->employee_id,
+                'sale_date'      => $request->sale_date,
+                'total_price'    => $request->total_price,
+                'payment_method' => $request->payment_method,
+                'status'         => $request->status ?? 'Pendente',
+            ]);
+
+            // Salva os itens da venda (produtos)
+            foreach ($request->items as $item) {
+                Request_item::create([
+                    'sale_id'     => $sale->id,
+                    'product_id'  => $item['product_id'],
+                    'quantity'    => $item['quantity'],
+                    'unit_price'  => $item['unit_price'],
+                    'total_price' => $item['quantity'] * $item['unit_price'],
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()->route('sale.index')->with('success', 'Venda criada com sucesso!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Erro ao criar a venda: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -86,7 +101,8 @@ class SaleController extends Controller
     public function edit($id)
     {
         $sale = Sale::find($id);
-        $clients = Client::all();
+        
+        return view('sales.crud', compact('sale', 'clients', 'employees'));
     }
 
     /**

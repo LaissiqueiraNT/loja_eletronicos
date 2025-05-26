@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('request_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sale_id')->nullable()->constrained('sales');
-            $table->foreignId('product_id')->nullable()->constrained('products');
-            $table->integer('quantity')->default(0)->nullable();
+            $table->foreignId('sale_id')->nullable()->constrained('sales')->onDelete('cascade');
+            $table->foreignId('product_id')->nullable()->constrained('products')->onDelete('restrict');
+            $table->unsignedInteger('quantity')->default(0);
             $table->decimal('unit_price', 10, 2)->nullable();
             $table->decimal('total_price', 10, 2)->nullable();
             $table->timestamps();

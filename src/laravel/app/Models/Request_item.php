@@ -3,29 +3,14 @@
 namespace App\Models;
 
 use App\Models\Sale;
-use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Request_item extends Model
 {
-    protected $table = 'request_items';
-    protected $guarded = ['id'];
-    // protected $fillable = [
-    //     'product_id',
-    //     'quantity',
-    //     'total_price',
-    //     'request_date',
-    //     'customer_name',
-    //     'customer_email',
-    //     'customer_phone'
-    // ];
+    protected $fillable = ['sale_id', 'product_id', 'quantity', 'unit_price'];
 
-    public function product()
+    public function sale()
     {
-        return $this->hasMany(Product::class);
-    }
-        public function sale()
-    {
-        return $this->hasMany(Sale::class);
+        return $this->belongsTo(Sale::class);
     }
 }
