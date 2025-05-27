@@ -316,40 +316,29 @@ return [
         'text' => 'Pesquisar',
     ],
     [
-        'text' => 'Cadastros',
-        'icon' => 'fas fa-pen-alt',
-        'submenu' => [
-            [
-                'text' => 'Clientes',
-                'url' => '/client',
-                'icon' => 'fas fa-user-edit',
-            ],
-            [
-                'text' => 'Funcionarios',
-                'url' => '/employee',
-                'icon' => 'fas fa-hands-helping',
-            ],
-            [
-                'text' => 'Produtos',
-                'url' => '/product',
-                'icon' => 'fas fa-headphones',
-            ],
-            [
-                'text' => 'Fornecedores',
-                'url' => '/supplier',
-                'icon' => 'fas fa-envelope',
-            ],
-            [
-                'text' => 'Vendas',
-                'url' => '/sale',
-                'icon' => 'fas fa-user-clock',
-            ],
-            // [
-            //     'text' => 'Pedidos',
-            //     'url' => '/request',
-            //     'icon' => 'fas fa-lightbulb',
-            // ],
-        ],
+        'text' => 'Clientes',
+        'url' => '/client',
+        'icon' => 'fas fa-user-edit',
+    ],
+    [
+        'text' => 'Funcionarios',
+        'url' => '/employee',
+        'icon' => 'fas fa-hands-helping',
+    ],
+    [
+        'text' => 'Produtos',
+        'url' => '/product',
+        'icon' => 'fas fa-headphones',
+    ],
+    [
+        'text' => 'Fornecedores',
+        'url' => '/supplier',
+        'icon' => 'fas fa-envelope',
+    ],
+    [
+        'text' => 'Vendas',
+        'url' => '/sale',
+        'icon' => 'fas fa-user-clock',
     ],
 ],
 

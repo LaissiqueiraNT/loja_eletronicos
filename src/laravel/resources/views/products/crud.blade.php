@@ -48,24 +48,24 @@
                             <option value="">Selecione...</option>
                             <option value="hardware" {{ old('type', @$edit->type) == 'hardware' ? 'selected' : '' }}>
                                 Hardware</option>
-                            <option value="perifericos"
-                                {{ old('type', @$edit->type) == 'perifericos' ? 'selected' : '' }}>Periféricos</option>
+                            <option value="perifericos" {{ old('type', @$edit->type) == 'perifericos' ? 'selected' : '' }}>
+                                Periféricos</option>
                             <option value="acessorios" {{ old('type', @$edit->type) == 'acessorios' ? 'selected' : '' }}>
                                 Acessórios</option>
-                            <option value="componentes"
-                                {{ old('type', @$edit->type) == 'componentes' ? 'selected' : '' }}>Componentes</option>
+                            <option value="componentes" {{ old('type', @$edit->type) == 'componentes' ? 'selected' : '' }}>
+                                Componentes</option>
                             <option value="computadores"
                                 {{ old('type', @$edit->type) == 'computadores' ? 'selected' : '' }}>Computadores</option>
                             <option value="notebooks" {{ old('type', @$edit->type) == 'notebooks' ? 'selected' : '' }}>
                                 Notebooks</option>
-                            <option value="impressoras"
-                                {{ old('type', @$edit->type) == 'impressoras' ? 'selected' : '' }}>Impressoras</option>
+                            <option value="impressoras" {{ old('type', @$edit->type) == 'impressoras' ? 'selected' : '' }}>
+                                Impressoras</option>
                             <option value="monitores" {{ old('type', @$edit->type) == 'monitores' ? 'selected' : '' }}>
                                 Monitores</option>
                             <option value="redes" {{ old('type', @$edit->type) == 'redes' ? 'selected' : '' }}>Redes
                             </option>
-                            <option value="smartphones"
-                                {{ old('type', @$edit->type) == 'smartphones' ? 'selected' : '' }}>Smartphones</option>
+                            <option value="smartphones" {{ old('type', @$edit->type) == 'smartphones' ? 'selected' : '' }}>
+                                Smartphones</option>
                             <option value="tablets" {{ old('type', @$edit->type) == 'tablets' ? 'selected' : '' }}>
                                 Tablets</option>
                             <option value="games" {{ old('type', @$edit->type) == 'games' ? 'selected' : '' }}>Games
@@ -132,14 +132,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskMoney/3.0.2/jquery.maskMoney.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script>
             $(document).ready(function() {
-                $('#price').maskMoney({
-                    prefix: 'R$ ',
-                    allowNegative: false,
-                    thousands: '.',
-                    decimal: ',',
-                    affixesStay: false
+                $('#unit_price').mask('R$ 00.000,00', {
+                    reverse: true
                 });
             });
         </script>

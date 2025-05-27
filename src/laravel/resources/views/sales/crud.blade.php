@@ -103,22 +103,31 @@
                             <span style="color: red;">{{ $errors->first('status') }}</span>
                         @endif
                     </div>
-                    <div class="col-md-6">
+
+
+                    <br>
                         <select class="form-control" name="products[]" multiple>
                             <option disabled>Selecione um ou mais produtos...</option>
                             @foreach ($products as $product)
                                 <option value="{{ $product->id }}">{{ $product->name }}</option>
                             @endforeach
                         </select>
-
                         <input type="number" class="form-control" name="quantities[]" min="1" value="1">
 
-                        <button type="button" class="btn btn-danger remove-row">Remover</button>
-
                         <button type="button" class="btn btn-success" id="add-product">Adicionar Produto</button>
-
-                    </div>
+                        <button type="button" class="btn btn-danger remove-row">Remover</button>
+                    
                 </div>
+                {{-- <div class="row">
+                    <div class="col-md-6">
+                        <select class="form-control" name="products[]">
+                        <option value="">Selecione um produto...</option>
+                        @foreach ($products as $product)
+                            <option value="{{ $product->id }}">{{ $product->name }}</option>
+                        @endforeach
+                    </select>
+                    </div>
+                </div> --}}
             </div>
             <br>
             <div class="card-footer">
@@ -137,44 +146,41 @@
 @section('js')
     <script src="{{ asset('vendor/jquery/jquery.maskedinput.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery/jquery.maskMoney.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#total_price').maskMoney({
-                prefix: 'R$ ',
-                allowNegative: false,
-                thousands: '.',
-                decimal: ',',
-                affixesStay: false
+            $('#total_price').mask('R$ 000.000.000,00', {
+                reverse: true
             });
         });
-        $(document).ready(function() {
-            $('#add-product').click(function() {
-                let row = `
-            <tr>
-                <td>
-                    <select class="form-control" name="products[]">
-                        <option value="">Selecione um produto...</option>
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}">{{ $product->name }}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td>
-                    <input type="number" class="form-control" name="quantities[]" min="1" value="1">
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger remove-row">Remover</button>
-                </td>
-            </tr>
-            `;
-                $('#product-table tbody').append(row);
-            });
+        // $(document).ready(function() {
+        //     $('#add-product').click(function() {
+        //         let row = `
+        //     <tr>
+        //         <td>
+        //             <select class="form-control" name="products[]">
+        //                 <option value="">Selecione um produto...</option>
+        //                 @foreach ($products as $product)
+        //                     <option value="{{ $product->id }}">{{ $product->name }}</option>
+        //                 @endforeach
+        //             </select>
+        //         </td>
+        //         <td>
+        //             <input type="number" class="form-control" name="quantities[]" min="1" value="1">
+        //         </td>
+        //         <td>
+        //             <button type="button" class="btn btn-danger remove-row">Remover</button>
+        //         </td>
+        //     </tr>
+        //     `;
+        //         $('#product-table tbody').append(row);
+        //     });
 
             $(document).on('click', '.remove-row', function() {
                 $(this).closest('tr').remove();
             });
-        });
+        
     </script>
 @stop

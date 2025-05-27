@@ -17,21 +17,21 @@
                     <form method="post" action="{{ route('client.update', ['client' => $edit->id]) }}">
                         @csrf
                         @method('PUT')
-                @else
-                    <form method="post" action="{{ route('client.store') }}">
-                        @csrf
+                    @else
+                        <form method="post" action="{{ route('client.store') }}">
+                            @csrf
                 @endif
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="client">Nome Completo</label>
+                        <label for="client">Nome Completo*</label>
                         <input type="text" class="form-control" id="client" name="client"
                             value="{{ $edit->name ?? old('client') }}">
                         @if ($errors->has('client'))
                             <span style="color: red;">{{ $errors->first('client') }}</span>
                         @endif
                     </div>
-                <div class="col-md-6">
+                    <div class="col-md-6">
                         <label for="email">Email</label>
                         <input type="text" class="form-control" id="email" name="email"
                             value="{{ $edit->email ?? old('email') }}">
@@ -96,52 +96,68 @@
                             <span style="color: red;">{{ $errors->first('phone') }}</span>
                         @endif
                     </div>
-                    {{-- <div class="col-md-6">
-                        <label for="birthdate">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="birthdate" name="birthdate"
-                            value="{{ $client->birthdate ?? old('birthdate') }}">
-                        @if ($errors->has('birthdate'))
-                            <span style="color: red;">{{ $errors->first('birthdate') }}</span>
-                        @endif
-                    </div> --}}
                 </div>
                 <br>
-                
-                    
-                
-                    {{-- <div class="col-md-6">
-                        <label>Status</label>
-                        <select class="form-control" name="is_active" id="is_active">
-                            <option value="0" {{ @$client->is_active == 0 ? 'selected' : '' }}>Inativo</option>
-                            <option value="1" {{ @$client->is_active == 1 ? 'selected' : '' }}>Ativo</option>
-                        </select>
-                        @if ($errors->has('is_active'))
-                            <span style="color: red;">{{ $errors->first('is_active') }}</span>
-                        @endif
-                    </div> --}}
-                   
                 <br>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Registrar</button>
                     <a href="{{ route('client.index') }}" type="button" class="btn btn-secondary">Voltar</a>
                 </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-@stop
+    @stop
 
-@section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@stop
+    @section('css')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    @stop
 
-@section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskMoney/3.0.2/jquery.maskMoney.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-             $("#cpf").mask("999.999.999-99");
-        });
-        
-    </script>
-@stop
+    @section('js')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskMoney/3.0.2/jquery.maskMoney.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            $(document).ready(function() {
+                $("#cpf").mask("999.999.999-99");
+                $("#cep").mask("99999-999");
+                $("#phone").mask("(99) 99999-9999");
+                $("#rg").mask("99.999.999-9");
+
+                $('#cep').on('blur', function() {
+                    let cep = $('#cep').val().replace(/\D/g, '');
+                    if (cep.length === 8) {
+                        $.ajax({
+                            url: 'https://viacep.com.br/ws/' + cep + '/json/',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                if (!data.erro) {
+                                    $('#address').val(data.logradouro);
+                                    $('#city').val(data.localidade);
+                                    // Se quiser bairro e UF, adicione campos e IDs no form e descomente:
+                                    // $('#bairro').val(data.bairro);
+                                    // $('#uf').val(data.uf);
+                                } else {
+                                    alert('CEP não encontrado.');
+                                }
+                            },
+                            error: function() {
+                                alert('Erro ao buscar o CEP.');
+                            }
+                        });
+                    }
+                });
+
+                if ($('#name') == "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Preencha os campos obrigatórios!",
+                        text: "Nome é obrigatório.",
+                    });
+                    return;
+                }
+            });
+        </script>
+    @stop

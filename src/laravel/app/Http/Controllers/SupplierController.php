@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\Facades\DataTables;
 
 class SupplierController extends Controller
@@ -15,9 +16,9 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-           
+
             $data = Supplier::latest()->get();
-            
+
             return DataTables::of($data)
                 ->addColumn('action', function ($row) {
                     $actionBtns = '
@@ -120,5 +121,21 @@ class SupplierController extends Controller
         $supplier = Supplier::find($id);
         $supplier->delete();
         return redirect()->route('supplier.index')->with('success', 'Fornecedor excluído com sucesso!');
+    }
+    public function cep(Request $request)
+    {
+        $cep = $request->input('cep');
+        $url = "https://viacep.com.br/ws/{$cep}/json/";
+
+        try {
+            $response = Http::get($url);
+
+            if ($response->successful()) {
+                return response()->json($response->json());
+            }
+            return response()->json(['error' => 'Erro ao consultar o CEP.'], $response->status());
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao consultar o CEP: ' . $e->getMessage()], 500);
+        }
     }
 }
