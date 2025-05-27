@@ -47,7 +47,7 @@ class ProductController extends Controller
     public function create()
     {
         $suppliers = Supplier::all(); // ou ->select('id', 'name')->get();
-        return view('products.crud', compact('suppliers'));
+        return redirect()->route('products.crud', compact('suppliers'));
     }
 
     /**
@@ -93,7 +93,7 @@ class ProductController extends Controller
     {
         $edit = Product::findOrFail($id);
         $suppliers = Supplier::all();
-        return view('products.crud', compact('edit', 'suppliers'));
+        return redirect()->route('products.crud', compact('edit', 'suppliers'));
     }
 
     /**

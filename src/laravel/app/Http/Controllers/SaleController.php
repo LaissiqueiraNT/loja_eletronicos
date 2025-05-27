@@ -52,7 +52,7 @@ class SaleController extends Controller
         $clients = Client::all();
         $employees = User::all();
         $products = Product::all();
-        return view('sales.crud', compact('clients', 'employees', 'products'));
+        return redirect()->route('sales.crud', compact('clients', 'employees', 'products'));
     }
 
     /**
@@ -113,7 +113,7 @@ class SaleController extends Controller
         $employees = User::all();
         $products = Product::all();
 
-        return view('sales.crud', compact('sale', 'clients', 'employees', 'products'));
+        return redirect()->route('sales.crud', compact('sale', 'clients', 'employees', 'products'));
     }
 
     /**

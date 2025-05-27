@@ -24,6 +24,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('product', ProductController::class);
     Route::resource('sale', SaleController::class);
     Route::resource('request', RequestController::class);
-    Route::resource('supplier', SupplierController::class);
-    
+    Route::resource('supplier', SupplierController::class); 
 });
+ Route::post('/employee/check-email', [EmployeeController::class, 'checkEmail'])->name('employee.checkEmail');

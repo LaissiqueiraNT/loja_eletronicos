@@ -12,14 +12,14 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
-  public function index(Request $request)
-{
-    if ($request->ajax()) {
-        $data = User::latest()->get();
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = User::latest()->get();
 
-        return DataTables::of($data)
-            ->addColumn('action', function ($row) {
-                $actionBtns = '
+            return DataTables::of($data)
+                ->addColumn('action', function ($row) {
+                    $actionBtns = '
                     <a href="' . route("employee.edit", $row->id) . '" class="btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
                     
                     <form action="' . route("employee.destroy", $row->id) . '" method="POST" style="display:inline" onsubmit="return confirm(\'Deseja realmente excluir este registro?\')">
@@ -28,14 +28,14 @@ class EmployeeController extends Controller
                         <button type="submit" class="btn btn-outline-danger btn-sm ml-2"><i class="fas fa-trash"></i></button>
                     </form>
                 ';
-                return $actionBtns;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-    }
+                    return $actionBtns;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
-    return view('employees.index');
-}
+        return view('employees.index');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -85,7 +85,7 @@ class EmployeeController extends Controller
         $output = [
             'edit' => $edit,
         ];
-        return view('employees.crud', $output);
+        return redirect()->route('employees.crud', $output);
     }
 
     /**
@@ -106,7 +106,7 @@ class EmployeeController extends Controller
         $employee->password = bcrypt($password);
         $employee->role_id = $role;
         $employee->update();
-        return view('employees.index');
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -116,6 +116,12 @@ class EmployeeController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return view('employees.index');
+        return redirect()->route('employees.index');
+    }
+    public function checkEmail(Request $request)
+    {
+        $email = $request->input('email');
+        $exists = \App\Models\User::where('email', $email)->exists();
+        return response()->json(['exists' => $exists]);
     }
 }

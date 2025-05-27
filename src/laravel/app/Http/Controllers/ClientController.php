@@ -36,7 +36,7 @@ class ClientController extends Controller
                 ->make(true);
         }
 
-        return view('clients.index');
+       return view('clients.index');
     }
 
     /**
@@ -45,7 +45,7 @@ class ClientController extends Controller
     public function create()
     {
 
-        return view('clients.crud');
+        return redirect()->route('client.crud');
     }
 
     /**
@@ -77,7 +77,7 @@ class ClientController extends Controller
         $client->last_user = $user->name;
         $client->save();
 
-        return view('clients.index');
+        return redirect()->route('client.index')->with('success', 'Cliente cadastrado com sucesso!');
     }
 
     /**
@@ -131,7 +131,7 @@ class ClientController extends Controller
         $client->origin_user = $user->name;
         $client->last_user = $user->name;
         $client->update();
-        return view('clients.index');
+        return redirect()->route('client.index')->with('success', 'Cliente atualizado com sucesso!');
     }
 
     /**
@@ -142,7 +142,7 @@ class ClientController extends Controller
         $client = Client::find($id);
         $client->delete();
 
-        return view('clients.index');
+        return redirect()->route('client.index')->with('success', 'Cliente deletado com sucesso!');
     }
 
     public function cep(Request $request){

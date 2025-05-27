@@ -45,7 +45,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('suppliers.crud');
+        return redirect()->route('suppliers.crud');
     }
 
     /**
@@ -87,7 +87,7 @@ class SupplierController extends Controller
         $output = [
             'edit' => $edit,
         ];
-        return view('suppliers.crud', $output);
+        return redirect()->route('suppliers.crud', $output);
     }
 
     /**

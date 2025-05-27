@@ -76,8 +76,10 @@
                     <div class="col-md-6">
                         <label>Status</label>
                         <select class="form-control" name="is_active" id="is_active">
-                            <option value="0" {{ old('is_active',@$edit->is_active) == 0 ? 'selected' : '' }}>Inativo</option>
-                            <option value="1" {{ old('is_active',@$edit->is_active) == 1 ? 'selected' : '' }}>Ativo</option>
+                            <option value="0" {{ old('is_active', @$edit->is_active) == 0 ? 'selected' : '' }}>Inativo
+                            </option>
+                            <option value="1" {{ old('is_active', @$edit->is_active) == 1 ? 'selected' : '' }}>Ativo
+                            </option>
                         </select>
                         @if ($errors->has('is_active'))
                             <span style="color: red;">{{ $errors->first('is_active') }}</span>
@@ -103,7 +105,7 @@
         <script src="{{ asset('vendor/jquery/jquery.maskMoney.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-               <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             $(document).ready(function() {
@@ -127,5 +129,38 @@
                     console.error('Botão ou input não encontrados.');
                 }
             });
-        </script>
-    @stop
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                let email = $('#email').val().trim();
+
+                if (email === "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Preencha os campos obrigatórios!",
+                        text: "Email é obrigatório.",
+                    });
+                    return;
+                }
+
+                $.ajax({
+                    url: "{{ route('employee.checkEmail') }}",
+                    type: "POST",
+                    data: {
+                        email: email,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Erro!",
+                                text: "Este e-mail já está cadastrado.",
+                            });
+                        } else {
+                            // Se não existe, envia o formulário
+                            e.target.submit();
+                        }
+                    }
+                });
+            });
+        @stop

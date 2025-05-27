@@ -46,7 +46,7 @@ class RequestController extends Controller
     {
         $sales = \App\Models\Sale::all();
         $products = \App\Models\Product::all();
-        return view('requests.crud');
+        return redirect()->route('requests.crud');
     }
 
     /**
@@ -91,7 +91,7 @@ class RequestController extends Controller
         $output = [
             'edit' => $edit,
         ];
-        return view('suppliers.crud', $output);
+        return redirect()->route('suppliers.crud', $output);
     }
 
     /**

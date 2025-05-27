@@ -100,7 +100,7 @@
                 <br>
                 <br>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button name="submit "type="submit" class="btn btn-primary">Registrar</button>
                     <a href="{{ route('client.index') }}" type="button" class="btn btn-secondary">Voltar</a>
                 </div>
                 </form>
@@ -116,7 +116,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskMoney/3.0.2/jquery.maskMoney.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             $(document).ready(function() {
@@ -136,7 +136,6 @@
                                 if (!data.erro) {
                                     $('#address').val(data.logradouro);
                                     $('#city').val(data.localidade);
-                                    // Se quiser bairro e UF, adicione campos e IDs no form e descomente:
                                     // $('#bairro').val(data.bairro);
                                     // $('#uf').val(data.uf);
                                 } else {
@@ -149,15 +148,17 @@
                         });
                     }
                 });
+                $('form').on('submit', function(e) {
+                    if ($('#client').val().trim() === "") {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Preencha os campos obrigatórios!",
+                            text: "Nome é obrigatório.",
+                        });
+                        e.preventDefault();
+                    }
 
-                if ($('#name') == "") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Preencha os campos obrigatórios!",
-                        text: "Nome é obrigatório.",
-                    });
-                    return;
-                }
+                });
             });
         </script>
     @stop
