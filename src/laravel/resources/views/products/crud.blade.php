@@ -32,11 +32,11 @@
                         @endif
                     </div>
                     <div class="col-md-6">
-                        <label for="descripition">Descrição</label>
-                        <input type="text" class="form-control" id="descripition" name="descripition"
-                            value="{{ $edit->descripition ?? old('descripition') }}">
-                        @if ($errors->has('descripition'))
-                            <span style="color: red;">{{ $errors->first('descripition') }}</span>
+                        <label for="description">Descrição</label>
+                        <input type="text" class="form-control" id="description" name="description"
+                            value="{{ $edit->description ?? old('description') }}">
+                        @if ($errors->has('description'))
+                            <span style="color: red;">{{ $errors->first('description') }}</span>
                         @endif
                     </div>
                 </div>
@@ -45,8 +45,35 @@
                     <div class="col-md-6">
                         <label for="cep">Tipo</label>
                         <select class="form-control" name="type" id="type">
-                            <option value="0" {{ @$edit->hadware == 0 ? 'selected' : '' }}>Hadware</option>
-                            <option value="1" {{ @$edit->peripherals == 1 ? 'selected' : '' }}>Periféricos</option>
+                            <option value="">Selecione...</option>
+                            <option value="hardware" {{ old('type', @$edit->type) == 'hardware' ? 'selected' : '' }}>
+                                Hardware</option>
+                            <option value="perifericos"
+                                {{ old('type', @$edit->type) == 'perifericos' ? 'selected' : '' }}>Periféricos</option>
+                            <option value="acessorios" {{ old('type', @$edit->type) == 'acessorios' ? 'selected' : '' }}>
+                                Acessórios</option>
+                            <option value="componentes"
+                                {{ old('type', @$edit->type) == 'componentes' ? 'selected' : '' }}>Componentes</option>
+                            <option value="computadores"
+                                {{ old('type', @$edit->type) == 'computadores' ? 'selected' : '' }}>Computadores</option>
+                            <option value="notebooks" {{ old('type', @$edit->type) == 'notebooks' ? 'selected' : '' }}>
+                                Notebooks</option>
+                            <option value="impressoras"
+                                {{ old('type', @$edit->type) == 'impressoras' ? 'selected' : '' }}>Impressoras</option>
+                            <option value="monitores" {{ old('type', @$edit->type) == 'monitores' ? 'selected' : '' }}>
+                                Monitores</option>
+                            <option value="redes" {{ old('type', @$edit->type) == 'redes' ? 'selected' : '' }}>Redes
+                            </option>
+                            <option value="smartphones"
+                                {{ old('type', @$edit->type) == 'smartphones' ? 'selected' : '' }}>Smartphones</option>
+                            <option value="tablets" {{ old('type', @$edit->type) == 'tablets' ? 'selected' : '' }}>
+                                Tablets</option>
+                            <option value="games" {{ old('type', @$edit->type) == 'games' ? 'selected' : '' }}>Games
+                            </option>
+                            <option value="cabos" {{ old('type', @$edit->type) == 'cabos' ? 'selected' : '' }}>Cabos
+                            </option>
+                            <option value="outros" {{ old('type', @$edit->type) == 'outros' ? 'selected' : '' }}>Outros
+                            </option>
                         </select>
 
                     </div>
@@ -62,24 +89,13 @@
                 <br>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="price">Preço</label>
-                        <input type="text" class="form-control" id="price" name="price"
-                            value="{{ $edit->price ?? old('price') }}">
-                        @if ($errors->has('price'))
-                            <span style="color: red;">{{ $errors->first('price') }}</span>
+                        <label for="unit_price">Preço Unitário</label>
+                        <input type="text" class="form-control" id="unit_price" name="unit_price"
+                            value="{{ $edit->unit_price ?? old('unit_price') }}">
+                        @if ($errors->has('unit_price'))
+                            <span style="color: red;">{{ $errors->first('unit_price') }}</span>
                         @endif
                     </div>
-                    <div class="col-md-6">
-                        <label for="brand">Marca</label>
-                        <input type="text" class="form-control" id="brand" name="brand"
-                            value="{{ $edit->brand ?? old('brand') }}">
-                        @if ($errors->has('brand'))
-                            <span style="color: red;">{{ $errors->first('brand') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <br>
-                <div class="row">
                     <div class="col-md-6">
                         <label>Fornecedor</label>
                         <select class="form-control" name="supplier_id" id="supplier_id">
@@ -96,7 +112,7 @@
                         @endif
                     </div>
                 </div>
-
+                <br>
                 <br>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Registrar</button>

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Sale;
+use App\Models\User;
 use App\Models\Client;
+use App\Models\Product;
 use App\Models\Request_item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +49,10 @@ class SaleController extends Controller
      */
     public function create()
     {
-        return view('sales.crud', compact('clients', 'employees'));
+        $clients = Client::all();
+        $employees = User::all();
+        $products = Product::all();
+        return view('sales.crud', compact('clients', 'employees', 'products'));
     }
 
     /**
@@ -54,6 +60,8 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
+        $products = $request->input('products');
+        $quantities = $request->input('quantities');
         DB::beginTransaction();
 
         try {
@@ -101,8 +109,11 @@ class SaleController extends Controller
     public function edit($id)
     {
         $sale = Sale::find($id);
-        
-        return view('sales.crud', compact('sale', 'clients', 'employees'));
+        $clients = Client::all();
+        $employees = User::all();
+        $products = Product::all();
+
+        return view('sales.crud', compact('sale', 'clients', 'employees', 'products'));
     }
 
     /**
@@ -110,6 +121,9 @@ class SaleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $products = $request->input('products');
+        $quantities = $request->input('quantities');
+
         $client_id = $request->post('client_id');
         $employee_id = $request->post('employee_id');
         $sale_date = $request->post('sale_date');

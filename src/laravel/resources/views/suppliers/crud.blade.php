@@ -63,7 +63,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="address">Endereço</label>
-                        <input type="text" class="form-control" id="address" placeholder="Cidade(Estado), " name="address"
+                        <input type="text" class="form-control" id="address" placeholder="CEP, Cidade(Estado), Bairro, Rua" name="address"
                             value="{{ $edit->address ?? old('address') }}">
                         @if ($errors->has('address'))
                             <span style="color: red;">{{ $errors->first('address') }}</span>
@@ -72,8 +72,8 @@
                     <div class="col-md-6">
                         <label>Status</label>
                         <select class="form-control" name="is_active" id="is_active">
-                            <option value="0" {{ @$edit->is_active == 0 ? 'selected' : '' }}>Inativo</option>
-                            <option value="1" {{ @$edit->is_active == 1 ? 'selected' : '' }}>Ativo</option>
+                            <option value="0" {{ old('is_active', @$edit->is_active) == 0 ? 'selected' : '' }}>Inativo</option>
+                            <option value="1" {{ old('is_active', @$edit->is_active) == 1 ? 'selected' : '' }}>Ativo</option>
                         </select>
                         @if ($errors->has('is_active'))
                             <span style="color: red;">{{ $errors->first('is_active') }}</span>

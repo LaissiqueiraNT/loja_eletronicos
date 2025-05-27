@@ -60,8 +60,9 @@
                     <div class="col-md-6">
                         <label for="address">Cargo</label>
                         <select class="form-control" name="role" id="role">
-                            <option value="0" {{ @$edit->role == 0 ? 'selected' : '' }}>Admin</option>
-                            <option value="1" {{ @$edit->role == 1 ? 'selected' : '' }}>Funcionário</option>
+                            <option value="0" {{ old('role', @$edit->role) == 0 ? 'selected' : '' }}>Admin</option>
+                            <option value="1" {{ old('role', @$edit->role) == 1 ? 'selected' : '' }}>Funcionário
+                            </option>
                         </select>
                         @if ($errors->has('role'))
                             <span style="color: red;">{{ $errors->first('role') }}</span>
@@ -75,8 +76,8 @@
                     <div class="col-md-6">
                         <label>Status</label>
                         <select class="form-control" name="is_active" id="is_active">
-                            <option value="0" {{ @$edit->is_active == 0 ? 'selected' : '' }}>Inativo</option>
-                            <option value="1" {{ @$edit->is_active == 1 ? 'selected' : '' }}>Ativo</option>
+                            <option value="0" {{ old('is_active',@$edit->is_active) == 0 ? 'selected' : '' }}>Inativo</option>
+                            <option value="1" {{ old('is_active',@$edit->is_active) == 1 ? 'selected' : '' }}>Ativo</option>
                         </select>
                         @if ($errors->has('is_active'))
                             <span style="color: red;">{{ $errors->first('is_active') }}</span>

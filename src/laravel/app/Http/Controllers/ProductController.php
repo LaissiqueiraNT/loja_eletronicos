@@ -60,8 +60,8 @@ class ProductController extends Controller
         $description = $request->post('description');
         $type = $request->post('type');
         $quantity = $request->post('quantity');
-        $price = $request->post('price');
-        $brand = $request->post('brand');
+        $unit_price = $request->post('unit_price');
+        $total_price = $request->post('total_price');
         $supplier = $request->post('supplier_id');
 
         $product = new Product();
@@ -69,8 +69,8 @@ class ProductController extends Controller
         $product->description = $description;
         $product->type = $type;
         $product->quantity = $quantity;
-        $product->price = $price;
-        $product->brand = $brand;
+        $product->unit_price = $unit_price;
+        $product->total_price = $unit_price * $quantity;
         $product->supplier_id = $supplier;
         $product->origin_user = $user->name;
         $product->last_user = $user->name;
@@ -107,8 +107,8 @@ class ProductController extends Controller
         $description = $request->post('description');
         $type = $request->post('type');
         $quantity = $request->post('quantity');
-        $price = $request->post('price');
-        $brand = $request->post('brand');
+        $unit_price = $request->post('unit_price');
+        $total_price = $request->post('total_price');
         $supplier = $request->post('supplier_id');
 
         $product = Product::find($id);
@@ -116,8 +116,8 @@ class ProductController extends Controller
         $product->description = $description;
         $product->type = $type;
         $product->quantity = $quantity;
-        $product->price = $price;
-        $product->brand = $brand;
+        $product->unit_price = $unit_price;
+        $product->total_price = $unit_price * $quantity;
         $product->supplier_id = $supplier;
         $product->last_user = $user->name;
         $product->update();
