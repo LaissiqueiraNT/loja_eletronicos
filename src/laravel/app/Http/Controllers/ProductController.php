@@ -47,7 +47,7 @@ class ProductController extends Controller
     public function create()
     {
         $suppliers = Supplier::all(); // ou ->select('id', 'name')->get();
-        return redirect()->route('products.crud', compact('suppliers'));
+        return view('products.crud', compact('suppliers'));
     }
 
     /**
@@ -68,14 +68,14 @@ class ProductController extends Controller
         $product->name = $name;
         $product->description = $description;
         $product->type = $type;
-        $product->quantity = $quantity;
-        $product->unit_price = $unit_price;
-        $product->total_price = $unit_price * $quantity;
+        $product->quantity = (int)$quantity;
+        $product->unit_price = (float)$unit_price;
+        $product->total_price = (float)$unit_price * (int)$quantity;
         $product->supplier_id = $supplier;
         $product->origin_user = $user->name;
         $product->last_user = $user->name;
         $product->save();
-        return redirect()->route('product.index')->with('success', 'Produto cadastrado com sucesso!');
+        return view('products.index')->with('success', 'Produto cadastrado com sucesso!');
     }
 
     /**
@@ -93,7 +93,7 @@ class ProductController extends Controller
     {
         $edit = Product::findOrFail($id);
         $suppliers = Supplier::all();
-        return redirect()->route('products.crud', compact('edit', 'suppliers'));
+        return view('products.crud', compact('edit', 'suppliers'));
     }
 
     /**
@@ -115,13 +115,13 @@ class ProductController extends Controller
         $product->name = $name;
         $product->description = $description;
         $product->type = $type;
-        $product->quantity = $quantity;
-        $product->unit_price = $unit_price;
-        $product->total_price = $unit_price * $quantity;
+        $product->quantity = (int)$quantity;
+        $product->unit_price = (float)$unit_price;
+        $product->total_price = (float)$unit_price * (int)$quantity;
         $product->supplier_id = $supplier;
         $product->last_user = $user->name;
         $product->update();
-        return redirect()->route('product.index')->with('success', 'Produto atualizado com sucesso!');
+        return view('products.index')->with('success', 'Produto atualizado com sucesso!');
     }
 
     /**
@@ -131,6 +131,6 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->delete();
-        return redirect()->route('product.index')->with('success', 'Produto excluído com sucesso!');
+        return view('products.index')->with('success', 'Produto excluído com sucesso!');
     }
 }

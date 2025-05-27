@@ -23,11 +23,12 @@
                 <thead>
                     <tr>
                         <th style="width: 5%">Id</th>
-                        <th style="width: 20%">Produto</th>
-                        <th style="width: 20%">Descrição</th>
+                        <th style="width: 15%">Produto</th>
+                        <th style="width: 15%">Descrição</th>
                         <th style="width: 10%">Tipo</th>
                         <th style="width: 5%">Quantidade</th>
                         <th style="width: 10%">Preço Unitário</th>
+                        <th style="width: 10%">Preço Total</th>
                         <th style="width: 15%">Fornecedor</th>
                         <th style="width: 25%">Ações</th>
                     </tr>
@@ -81,6 +82,10 @@
                     },
                     {
                         data: 'unit_price',
+                        name: 'Preço Unitário'
+                    },
+                    {
+                        data: 'total_price',
                         name: 'Preço Unitário'
                     },
                     {

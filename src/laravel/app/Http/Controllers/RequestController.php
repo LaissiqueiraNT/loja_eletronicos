@@ -46,7 +46,7 @@ class RequestController extends Controller
     {
         $sales = \App\Models\Sale::all();
         $products = \App\Models\Product::all();
-        return redirect()->route('requests.crud');
+        return view('requests.crud');
     }
 
     /**
@@ -68,7 +68,7 @@ class RequestController extends Controller
         $request->unit_price = $unit_price;
         $request->total_price = $total_price;
         $request->save();
-        return redirect()->route('request.index')->with('success', 'Requisição criada com sucesso!');
+        return view('requests.index')->with('success', 'Requisição criada com sucesso!');
     }
 
     /**
@@ -91,7 +91,7 @@ class RequestController extends Controller
         $output = [
             'edit' => $edit,
         ];
-        return redirect()->route('suppliers.crud', $output);
+        return view('suppliers.crud', $output);
     }
 
     /**
@@ -115,7 +115,7 @@ class RequestController extends Controller
         $request->update();
 
 
-        return redirect()->route('request.index')->with('error', 'Requisição não encontrada!');
+        return view('requests.index')->with('error', 'Requisição não encontrada!');
     }
 
     /**
@@ -125,6 +125,6 @@ class RequestController extends Controller
     {
         $request_item = Request_item::find($id);
         $request_item->delete();
-        return redirect()->route('request.index')->with('error', 'Requisição não encontrada!');
+        return view('requests.index')->with('error', 'Requisição não encontrada!');
     }
 }

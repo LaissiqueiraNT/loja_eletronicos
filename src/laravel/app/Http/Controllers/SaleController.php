@@ -52,48 +52,73 @@ class SaleController extends Controller
         $clients = Client::all();
         $employees = User::all();
         $products = Product::all();
-        return redirect()->route('sales.crud', compact('clients', 'employees', 'products'));
+        return view('sales.crud', compact('clients', 'employees', 'products'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $products = $request->input('products');
-        $quantities = $request->input('quantities');
-        DB::beginTransaction();
+public function store(Request $request)
+{
+    $products = $request->input('products'); // array de IDs
+    $quantities = $request->input('quantities'); // array de quantidades
+    
 
-        try {
-            // Cria a venda
-            $sale = Sale::create([
-                'client_id'      => $request->client_id,
-                'employee_id'    => $request->employee_id,
-                'sale_date'      => $request->sale_date,
-                'total_price'    => $request->total_price,
-                'payment_method' => $request->payment_method,
-                'status'         => $request->status ?? 'Pendente',
-            ]);
+    DB::beginTransaction();
 
-            // Salva os itens da venda (produtos)
-            foreach ($request->items as $item) {
-                Request_item::create([
-                    'sale_id'     => $sale->id,
-                    'product_id'  => $item['product_id'],
-                    'quantity'    => $item['quantity'],
-                    'unit_price'  => $item['unit_price'],
-                    'total_price' => $item['quantity'] * $item['unit_price'],
-                ]);
+    try {
+        $totalPrice = 0;
+
+        // Primeiro loop: valida e calcula total
+        foreach ($products as $index => $productId) {
+            $qSale = $quantities[$index];
+            $product = Product::findOrFail($productId);
+
+            if ($product->quantity < $qSale) {
+                DB::rollBack();
+                return back()->with('error', "Produto {$product->name} não tem estoque suficiente.");
             }
 
-            DB::commit();
-
-            return redirect()->route('sale.index')->with('success', 'Venda criada com sucesso!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Erro ao criar a venda: ' . $e->getMessage());
+            $totalPrice += $product->unit_price * $qSale;
         }
+        // Cria a venda
+        $sale = Sale::create([
+            'client_id'      => $request->client_id,
+            'employee_id'    => $request->employee_id,
+            'sale_date'      => $request->sale_date,
+            'total_price'    => $request->total_price,
+            'payment_method' => $request->payment_method,
+            'status'         => $request->status ?? 'Pendente',
+        ]);
+
+        foreach ($products as $index => $productId) {
+            $qSale = $quantities[$index];
+
+            $product = Product::findOrFail($productId);
+
+            // Verifica se tem estoque suficiente
+            if ($product->quantity < $qSale) {
+                DB::rollBack();
+                return back()->with('error', "Produto {$product->name} não tem estoque suficiente.");
+            }
+
+            // Diminui estoque
+            $product->quantity -= $qSale;
+            $product->save();
+
+            // Relaciona produto à venda com a quantidade vendida
+            $sale->products()->attach($product->id, [
+                'quantity' => $qSale,
+            ]);
+        }
+
+        DB::commit();
+        return redirect()->route('sale.index')->with('success', 'Venda registrada com sucesso!');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->with('error', 'Erro ao registrar a venda: ' . $e->getMessage());
     }
+}
 
     /**
      * Display the specified resource.
@@ -113,7 +138,7 @@ class SaleController extends Controller
         $employees = User::all();
         $products = Product::all();
 
-        return redirect()->route('sales.crud', compact('sale', 'clients', 'employees', 'products'));
+        return view('sales.crud', compact('sale', 'clients', 'employees', 'products'));
     }
 
     /**
@@ -138,7 +163,7 @@ class SaleController extends Controller
         $sale->payment_method = $payment_method;
         $sale->status = $status;
         $sale->update();
-        return redirect()->route('sale.index')->with('success', 'Venda atualizada com sucesso!');
+        return view('sale.index')->with('success', 'Venda atualizada com sucesso!');
     }
 
     /**
@@ -148,6 +173,6 @@ class SaleController extends Controller
     {
         $sale = Sale::find($id);
         $sale->delete();
-        return redirect()->route('sale.index')->with('error', 'Venda não encontrada!');
+        return view('sale.index')->with('error', 'Venda não encontrada!');
     }
 }

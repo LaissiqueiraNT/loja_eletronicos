@@ -21,7 +21,4 @@ class Sale extends Model
         ->withPivot('quantity', 'unit_price')
         ->withTimestamps();
     }
-    public function items() {
-    return $this->hasMany(Request_item::class);
-}
 }

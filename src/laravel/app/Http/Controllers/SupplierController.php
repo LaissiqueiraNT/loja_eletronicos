@@ -45,7 +45,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return redirect()->route('suppliers.crud');
+        return view('suppliers.crud');
     }
 
     /**
@@ -67,7 +67,7 @@ class SupplierController extends Controller
         $supplier->cnpj = $cnpj;
         $supplier->address = $address;
         $supplier->save();
-        return redirect()->route('supplier.index')->with('success', 'Fornecedor cadastrado com sucesso!');
+        return view('suppliers.index')->with('success', 'Fornecedor cadastrado com sucesso!');
     }
 
     /**
@@ -87,7 +87,7 @@ class SupplierController extends Controller
         $output = [
             'edit' => $edit,
         ];
-        return redirect()->route('suppliers.crud', $output);
+        return view('suppliers.crud', $output);
     }
 
     /**
@@ -110,7 +110,7 @@ class SupplierController extends Controller
         $supplier->cnpj = $cnpj;
         $supplier->address = $address;
         $supplier->update();
-        return redirect()->route('supplier.index')->with('success', 'Fornecedor atualizado com sucesso!');
+        return view('suppliers.index')->with('success', 'Fornecedor atualizado com sucesso!');
     }
 
     /**
@@ -120,7 +120,7 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::find($id);
         $supplier->delete();
-        return redirect()->route('supplier.index')->with('success', 'Fornecedor excluído com sucesso!');
+        return view('suppliers.index')->with('success', 'Fornecedor excluído com sucesso!');
     }
     public function cep(Request $request)
     {

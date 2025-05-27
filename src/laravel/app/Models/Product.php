@@ -16,10 +16,6 @@ class Product extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
-    public function request()
-    {
-        return $this->belongsTo(Request_item::class);
-    }
     public function sale()
     {
         return $this->belongsToMany(Sale::class)

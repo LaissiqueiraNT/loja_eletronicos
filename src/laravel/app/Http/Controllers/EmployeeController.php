@@ -64,7 +64,7 @@ class EmployeeController extends Controller
         $user->password = bcrypt($password);
         $user->role_id = $role;
         $user->save();
-        return redirect()->route('employee.index')->with('success', 'Funcionário cadastrado com sucesso!');
+        return view('employees.index')->with('success', 'Funcionário cadastrado com sucesso!');
     }
 
     /**
@@ -85,7 +85,7 @@ class EmployeeController extends Controller
         $output = [
             'edit' => $edit,
         ];
-        return redirect()->route('employees.crud', $output);
+        return view('employees.crud', $output);
     }
 
     /**
@@ -106,7 +106,7 @@ class EmployeeController extends Controller
         $employee->password = bcrypt($password);
         $employee->role_id = $role;
         $employee->update();
-        return redirect()->route('employees.index');
+        return view('employees.index');
     }
 
     /**
@@ -116,7 +116,7 @@ class EmployeeController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('employees.index');
+        return view('employees.index');
     }
     public function checkEmail(Request $request)
     {
