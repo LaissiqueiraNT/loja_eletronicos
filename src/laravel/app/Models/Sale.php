@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Client;
 use App\Models\Product;
-use App\Models\Request_item;
 use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
@@ -17,8 +18,16 @@ class Sale extends Model
     // }
     public function product()
     {
-        return $this->belongsToMany(Product::class)
-        ->withPivot('quantity', 'unit_price')
-        ->withTimestamps();
+        return $this->belongsTo(Product::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(User::class, 'employee_id');
     }
 }

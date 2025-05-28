@@ -7,9 +7,8 @@ use App\Models\Sale;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Product;
-use App\Models\Request_item;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class SaleController extends Controller
@@ -20,20 +19,22 @@ class SaleController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Sale::with(['client', 'employee'])->select('sales.*');
+            $data = Sale::with(['client', 'employee', 'product'])->select('sales.*');
             return DataTables::of($data)
                 ->addColumn('client_name', fn($row) => $row->client->name ?? '')
                 ->addColumn('employee_name', fn($row) => $row->employee->name ?? '')
-
+                ->addColumn('sale_date', function ($row) {
+                    return $row->sale_date ? \Carbon\Carbon::parse($row->sale_date)->format('d/m/Y') : '';
+                })
+                ->addColumn('product_name', fn($row) => $row->product->name ?? '')
                 ->addColumn('action', function ($row) {
                     $actionBtns = '
-                    <a href="' . route("sale.edit", $row->id) . '" class="btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
-                    
-                    <form action="' . route("sale.destroy", $row->id) . '" method="POST" style="display:inline" onsubmit="return confirm(\'Deseja realmente excluir este registro?\')">
-                        ' . csrf_field() . '
-                        ' . method_field("DELETE") . '
-                        <button type="submit" class="btn btn-outline-danger btn-sm ml-2"><i class="fas fa-trash"></i></button>
-                    </form>
+                <a href="' . route("sale.edit", $row->id) . '" class="btn btn-outline-info btn-sm"><i class="fas fa-pen"></i></a>
+                <form action="' . route("sale.destroy", $row->id) . '" method="POST" style="display:inline" onsubmit="return confirm(\'Deseja realmente excluir este registro?\')">
+                    ' . csrf_field() . '
+                    ' . method_field("DELETE") . '
+                    <button type="submit" class="btn btn-outline-danger btn-sm ml-2"><i class="fas fa-trash"></i></button>
+                </form>
                 ';
                     return $actionBtns;
                 })
@@ -41,7 +42,10 @@ class SaleController extends Controller
                 ->make(true);
         }
 
-        return view('sales.index');
+        $clients = Client::all();
+        $employees = User::all();
+        $products = Product::all();
+        return view('sales.index', compact('clients', 'employees', 'products'));
     }
 
     /**
@@ -58,67 +62,51 @@ class SaleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-public function store(Request $request)
-{
-    $products = $request->input('products'); // array de IDs
-    $quantities = $request->input('quantities'); // array de quantidades
-    
+    public function store(Request $request)
+    {
+        $user = Auth::user();
 
-    DB::beginTransaction();
+        $client_id = $request->post('client_id');
+        $employee_id = $request->post('employee_id');
+        $product_id = $request->post('products');
+        $quantity = $request->post('quantity');
+        $sale_date = $request->post('sale_date');
+        $total_price = $request->post('total_price');
+        $payment_method = $request->post('payment_method');
+        $status = $request->post('status');
 
-    try {
-        $totalPrice = 0;
-
-        // Primeiro loop: valida e calcula total
-        foreach ($products as $index => $productId) {
-            $qSale = $quantities[$index];
-            $product = Product::findOrFail($productId);
-
-            if ($product->quantity < $qSale) {
-                DB::rollBack();
-                return back()->with('error', "Produto {$product->name} não tem estoque suficiente.");
-            }
-
-            $totalPrice += $product->unit_price * $qSale;
-        }
-        // Cria a venda
-        $sale = Sale::create([
-            'client_id'      => $request->client_id,
-            'employee_id'    => $request->employee_id,
-            'sale_date'      => $request->sale_date,
-            'total_price'    => $request->total_price,
-            'payment_method' => $request->payment_method,
-            'status'         => $request->status ?? 'Pendente',
-        ]);
-
-        foreach ($products as $index => $productId) {
-            $qSale = $quantities[$index];
-
-            $product = Product::findOrFail($productId);
-
-            // Verifica se tem estoque suficiente
-            if ($product->quantity < $qSale) {
-                DB::rollBack();
-                return back()->with('error', "Produto {$product->name} não tem estoque suficiente.");
-            }
-
-            // Diminui estoque
-            $product->quantity -= $qSale;
+        $product = Product::find($product_id);
+        if ($product && $product->quantity >= $quantity) {
+            $product->quantity -= $quantity;
             $product->save();
+        } else {
+            return back()->with('error', 'Estoque insuficiente para este produto.');
+        }
+        $total_price = $product ? $product->unit_price * $quantity : 0;
 
-            // Relaciona produto à venda com a quantidade vendida
-            $sale->products()->attach($product->id, [
-                'quantity' => $qSale,
-            ]);
+
+
+        $sale = new Sale();
+
+        $sale->client_id = $client_id;
+        $sale->employee_id = $employee_id;
+        $sale->product_id = $product_id;
+        $sale->quantity = $quantity;
+        $sale->sale_date = $sale_date;
+        $sale->total_price = $total_price;
+        $sale->payment_method = $payment_method;
+        $sale->status = $status;
+        $sale->origin_user = $user->name;
+        $sale->save();
+
+        return redirect()->route('sale.index')->with('success', 'Venda registrada com sucesso!');
+
+        if ($request->input('action') === 'newRegister') {
+            return redirect()->route('sale.create')->with('success', 'Venda registrada! Pronto para novo cadastro.');
         }
 
-        DB::commit();
         return redirect()->route('sale.index')->with('success', 'Venda registrada com sucesso!');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return back()->with('error', 'Erro ao registrar a venda: ' . $e->getMessage());
     }
-}
 
     /**
      * Display the specified resource.

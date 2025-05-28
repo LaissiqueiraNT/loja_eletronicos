@@ -77,7 +77,7 @@ class ClientController extends Controller
         $client->last_user = $user->name;
         $client->save();
 
-        return view('client.index')->with('success', 'Cliente cadastrado com sucesso!');
+        return view('clients.index')->with('success', 'Cliente cadastrado com sucesso!');
     }
 
     /**
@@ -142,7 +142,7 @@ class ClientController extends Controller
         $client = Client::find($id);
         $client->delete();
 
-        return view('client.index')->with('success', 'Cliente deletado com sucesso!');
+        return view('clients.index')->with('success', 'Cliente deletado com sucesso!');
     }
 
     public function cep(Request $request){

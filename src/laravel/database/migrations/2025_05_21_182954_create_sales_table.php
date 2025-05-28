@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->nullable()->constrained('clients')->nullOnDelete();
             $table->foreignId('employee_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('project_id')->nullable()->constrained('projects')->nullOnDelete();
+            $table->foreignId('product_id')->nullable()->constrained('products')->nullOnDelete();
             $table->integer('quantity')->default(0)->nullable();
             $table->date('sale_date')->nullable();
             $table->decimal('total_price', 10, 2)->nullable();
             $table->string('payment_method')->nullable();
-            $table->enum('status', ['Pendente', 'Pago', 'Cancelado'])->default('Pendente');
+            $table->enum('status', ['Pendente', 'Pago', 'Cancelado'])->default('Pendente')->nullable();
             $table->string('origin_user')->nullable();
             $table->string('last_user')->nullable();
             $table->timestamps();

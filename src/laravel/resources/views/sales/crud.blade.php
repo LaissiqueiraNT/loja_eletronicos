@@ -101,9 +101,9 @@
                     <div class="col-md-6">
                         <label for="status">Status</label>
                         <select class="form-control" name="status" id="status">
-                            <option value="aberta" {{ @$sale->status == 'aberta' ? 'selected' : '' }}>Aberta</option>
-                            <option value="paga" {{ @$sale->status == 'paga' ? 'selected' : '' }}>Paga</option>
-                            <option value="cancelada" {{ @$sale->status == 'cancelada' ? 'selected' : '' }}>Cancelada
+                            <option value="Pendente" {{ @$sale->status == 'Pendente' ? 'selected' : '' }}>Pendente</option>
+                            <option value="Pago" {{ @$sale->status == 'Pago' ? 'selected' : '' }}>Pago</option>
+                            <option value="Cancelado" {{ @$sale->status == 'Cancelado' ? 'selected' : '' }}>Cancelado
                             </option>
                         </select>
                         @if ($errors->has('status'))
@@ -112,61 +112,63 @@
 
                     </div>
 
+                </div>
+                <br>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <label for="products">Produtos</label>
+                        <select class="form-control" name="products" id="products">
+                            <option value="">Selecione um produto</option>
+                            @foreach ($products as $product)
+                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <br>
-                    <div class="row">
-                        
-                        <div class="col-md-6">
-                            <label for="products">Produtos</label>
-                            <select class="form-control" name="products[]" id="products">
-                                <option value="">Selecione um produto</option>
-                                @foreach ($products as $product)
-                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <br>
-                        <div class="col-md-6">
-                              <label for="quantity">Quantidade</label>
+                    <div class="col-md-6">
+                        <label for="quantity">Quantidade</label>
                         <input type="number" class="form-control" id="quantity" name="quantity" min="0"
                             value="{{ $edit->quantity ?? old('quantity') }}">
                         @if ($errors->has('quantity'))
                             <span style="color: red;">{{ $errors->first('quantity') }}</span>
                         @endif
                     </div>
-                    </div>
-            </div>
                 </div>
-                <br>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Registrar</button>
-                    <a href="{{ route('sale.index') }}" type="button" class="btn btn-secondary">Voltar</a>
-                    <button type="submit" name="action" value="newRegister" class="btn btn-primary">Registrar e cadastrar um novo</button>
-                </div>
-                </form>
             </div>
         </div>
-    @stop
+        <br>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="submit" name="action" value="newRegister" class="btn btn-success">Registrar e cadastrar
+                novo</button>
+            <a href="{{ route('sale.index') }}" type="button" class="btn btn-secondary">Voltar</a>
+            {{-- <button type="submit" name="action" value="newRegister" class="btn btn-primary">Registrar e cadastrar um novo</button> --}}
+        </div>
+        </form>
+    </div>
+    </div>
+@stop
 
-    @section('css')
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    @stop
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@stop
 
-    @section('js')
-        <script src="{{ asset('vendor/jquery/jquery.maskedinput.min.js') }}"></script>
-        <script src="{{ asset('vendor/jquery/jquery.maskMoney.min.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#total_price').mask('R$ 000.000.000,00', {
-                    reverse: true
-                });
+@section('js')
+    <script src="{{ asset('vendor/jquery/jquery.maskedinput.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery/jquery.maskMoney.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#total_price').mask('R$ 000.000.000,00', {
+                reverse: true
             });
-            // $(document).ready(function() {
-            //     $('#add-product').click(function() {
-            //         let row = `
+        });
+        // $(document).ready(function() {
+        //     $('#add-product').click(function() {
+        //         let row = `
     //     <tr>
     //         <td>
     //             <select class="form-control" name="products[]">
@@ -184,11 +186,11 @@
     //         </td>
     //     </tr>
     //     `;
-            //         $('#product-table tbody').append(row);
-            //     });
+        //         $('#product-table tbody').append(row);
+        //     });
 
-            $(document).on('click', '.remove-row', function() {
-                $(this).closest('tr').remove();
-            });
-        </script>
-    @stop
+        $(document).on('click', '.remove-row', function() {
+            $(this).closest('tr').remove();
+        });
+    </script>
+@stop
