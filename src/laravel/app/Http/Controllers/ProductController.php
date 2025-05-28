@@ -61,8 +61,10 @@ class ProductController extends Controller
         $type = $request->post('type');
         $quantity = $request->post('quantity');
         $unit_price = $request->post('unit_price');
-        $total_price = $request->post('total_price');
         $supplier = $request->post('supplier_id');
+
+        $unit_price = str_replace('.', '', $unit_price); 
+        $unit_price = str_replace(',', '.', $unit_price); 
 
         $product = new Product();
         $product->name = $name;
@@ -101,15 +103,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $user = Auth::user();
         $name = $request->post('name');
         $description = $request->post('description');
         $type = $request->post('type');
         $quantity = $request->post('quantity');
         $unit_price = $request->post('unit_price');
-        $total_price = $request->post('total_price');
         $supplier = $request->post('supplier_id');
+
+        // CONVERSÃO DO PREÇO
+        $unit_price = str_replace('.', '', $unit_price);
+        $unit_price = str_replace(',', '.', $unit_price);
 
         $product = Product::find($id);
         $product->name = $name;

@@ -23,13 +23,12 @@
                 <thead>
                     <tr>
                         <th style="width: 5%">Id</th>
-                        <th style="width: 20%">Empresa</th>
+                        <th style="width: 15%">Empresa</th>
                         <th style="width: 15%">Email</th>
                         <th style="width: 10%">Telefone</th>
-                        <th style="width: 10%">CNPJ</th>
-                        <th style="width: 15%">Endereço</th>
-                        <th style="width: 10%">Status</th>
-                        <th style="width: 25%">Ações</th>
+                        <th style="width: 15%">CNPJ</th>
+                        <th style="width: 20%">Endereço</th>
+                        <th style="width: 30%">Ações</th>
                     </tr>
                 </thead>
             </table>
@@ -82,13 +81,6 @@
                     {
                         data: 'address',
                         name: 'Endereço'
-                    },
-                    {
-                        data: 'is_active',
-                        name: 'Status',
-                        render: function(data, type, row) {
-                            return data == 1 ? 'Ativo' : 'Inativo';
-                        }
                     },
                     {
                         data: 'action',

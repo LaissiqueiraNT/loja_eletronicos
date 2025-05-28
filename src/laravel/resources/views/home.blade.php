@@ -8,14 +8,14 @@
         }
     </style>
 
-@section('title', 'Dashboard')
+@section('title', 'Eletrotech')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>Eletrotech</h1>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    <p>Bem vindo ao site da Eletrotech</p>
 @stop
 
 @section('css')

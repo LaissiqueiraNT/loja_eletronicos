@@ -121,7 +121,14 @@ class EmployeeController extends Controller
     public function checkEmail(Request $request)
     {
         $email = $request->input('email');
-        $exists = \App\Models\User::where('email', $email)->exists();
+        $id = $request->input('id');
+
+        $query = \App\Models\User::where('email', $email);
+        if ($id) {
+            $query->where('id', '!=', $id);
+        }
+        $exists = $query->exists();
+
         return response()->json(['exists' => $exists]);
     }
 }

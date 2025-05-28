@@ -25,9 +25,8 @@
                         <th style="width: 5%">Id</th>
                         <th style="width: 30%">Nome</th>
                         <th style="width: 20%">Email</th>
-                        <th style="width: 15%">Cargo</th>
-                        <th style="width: 10%">Status</th>
-                        <th style="width: 20%">Ações</th>
+                        <th style="width: 20%">Cargo</th>
+                        <th style="width: 25%">Ações</th>
                     </tr>
                 </thead>
             </table>
@@ -74,13 +73,6 @@
                         name: 'Cargo',
                         render: function(data, type, row) {
                             return data == 0 ? 'Admin' : 'Funcionário';
-                        }
-                    },
-                    {
-                        data: 'is_active',
-                        name: 'Status',
-                        render: function(data, type, row) {
-                            return data == 1 ? 'Ativo' : 'Inativo';
                         }
                     },
                     {

@@ -324,17 +324,19 @@ return [
         'text' => 'Funcionarios',
         'url' => '/employee',
         'icon' => 'fas fa-hands-helping',
-    ],
-    [
-        'text' => 'Produtos',
-        'url' => '/product',
-        'icon' => 'fas fa-headphones',
+        'can' => 'view-employee',
     ],
     [
         'text' => 'Fornecedores',
         'url' => '/supplier',
         'icon' => 'fas fa-envelope',
     ],
+    [
+        'text' => 'Produtos',
+        'url' => '/product',
+        'icon' => 'fas fa-headphones',
+    ],
+    
     [
         'text' => 'Vendas',
         'url' => '/sale',

@@ -24,7 +24,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="name">Nome Completo</label>
+                        <label for="name">Nome Completo*</label>
                         <input type="text" class="form-control" id="name" name="name"
                             value="{{ $edit->name ?? old('name') }}">
                         @if ($errors->has('name'))
@@ -32,7 +32,7 @@
                         @endif
                     </div>
                     <div class="col-md-6">
-                        <label for="email">Email</label>
+                        <label for="email">Email*</label>
                         <input type="text" class="form-control" id="email" name="email"
                             value="{{ $edit->email ?? old('email') }}">
                         @if ($errors->has('email'))
@@ -43,7 +43,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="password">Senha</label>
+                        <label for="password">Senha*</label>
                         <div style="position: relative;">
                             <input type="password" class="form-control" id="password" name="password"
                                 value="{{ $edit->password ?? old('password') }}">
@@ -58,32 +58,18 @@
                         @endif
                     </div>
                     <div class="col-md-6">
-                        <label for="address">Cargo</label>
-                        <select class="form-control" name="role" id="role">
-                            <option value="0" {{ old('role', @$edit->role) == 0 ? 'selected' : '' }}>Admin</option>
-                            <option value="1" {{ old('role', @$edit->role) == 1 ? 'selected' : '' }}>Funcionário
+                        <label for="role_id">Cargo*</label>
+                        <select class="form-control" name="role_id" id="role_id">
+                            <option value="0" {{ old('role_id', @$edit->role_id) == 0 ? 'selected' : '' }}>Admin
+                            </option>
+                            <option value="1" {{ old('role_id', @$edit->role_id) == 1 ? 'selected' : '' }}>Funcionário
                             </option>
                         </select>
-                        @if ($errors->has('role'))
-                            <span style="color: red;">{{ $errors->first('role') }}</span>
+                        @if ($errors->has('role_id'))
+                            <span style="color: red;">{{ $errors->first('role_id') }}</span>
                         @endif
 
 
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Status</label>
-                        <select class="form-control" name="is_active" id="is_active">
-                            <option value="0" {{ old('is_active', @$edit->is_active) == 0 ? 'selected' : '' }}>Inativo
-                            </option>
-                            <option value="1" {{ old('is_active', @$edit->is_active) == 1 ? 'selected' : '' }}>Ativo
-                            </option>
-                        </select>
-                        @if ($errors->has('is_active'))
-                            <span style="color: red;">{{ $errors->first('is_active') }}</span>
-                        @endif
                     </div>
                 </div>
                 <br>
@@ -108,59 +94,65 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            $(document).ready(function() {
+            $(function() {
+                // Máscara CPF (caso use)
                 $("#cpf").mask("999.999.999-99");
 
-                const button = document.getElementById('eye');
-                const input = document.getElementById('password');
-                const img = document.getElementById('open');
-
-                if (button && input && img) {
-                    button.addEventListener('click', function() {
-                        if (input.type === 'password') {
-                            input.type = 'text';
-                            img.src = "{{ asset('vendor/adminlte/dist/img/close.png') }}";
-                        } else {
-                            input.type = 'password';
-                            img.src = "{{ asset('vendor/adminlte/dist/img/open.png') }}";
-                        }
-                    });
-                } else {
-                    console.error('Botão ou input não encontrados.');
-                }
-            });
-            $('form').on('submit', function(e) {
-                e.preventDefault();
-                let email = $('#email').val().trim();
-
-                if (email === "") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Preencha os campos obrigatórios!",
-                        text: "Email é obrigatório.",
-                    });
-                    return;
-                }
-
-                $.ajax({
-                    url: "{{ route('employee.checkEmail') }}",
-                    type: "POST",
-                    data: {
-                        email: email,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        if (response.exists) {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Erro!",
-                                text: "Este e-mail já está cadastrado.",
-                            });
-                        } else {
-                            // Se não existe, envia o formulário
-                            e.target.submit();
-                        }
+                // Olho da senha
+                $('#eye').on('click', function() {
+                    const input = $('#password');
+                    const img = $('#open');
+                    if (input.attr('type') === 'password') {
+                        input.attr('type', 'text');
+                        img.attr('src', "{{ asset('vendor/adminlte/dist/img/close.png') }}");
+                    } else {
+                        input.attr('type', 'password');
+                        img.attr('src', "{{ asset('vendor/adminlte/dist/img/open.png') }}");
                     }
                 });
+
+                $('form').on('submit', function(e) {
+            e.preventDefault();
+
+            // Validação dos campos obrigatórios
+            if (
+                $('#name').val().trim() === "" ||
+                $('#email').val().trim() === "" ||
+                $('#password').val().trim() === "" ||
+                $('#role_id').val().trim() === ""
+            ) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Preencha os campos obrigatórios!",
+                    text: "Nome, Email, Senha e Cargo são obrigatórios.",
+                });
+                return;
+            }
+
+            // Validação de e-mail via AJAX
+            let email = $('#email').val().trim();
+            $.ajax({
+                url: "{{ route('employee.checkEmail') }}",
+                type: "POST",
+                data: {
+                    email: email,
+                    id: "{{ isset($edit->id) ? $edit->id : '' }}",
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    if (response.exists) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Erro!",
+                            text: "Este e-mail já está cadastrado.",
+                        });
+                    } else {
+                        // Se não existe, envia o formulário
+                        e.target.submit();
+                    }
+                }
             });
-        @stop
+        });
+    });
+        </script>
+    @stop
