@@ -1,0 +1,47 @@
+# === Dependências e arquivos de build ===
+/vendor/
+/node_modules/
+/bootstrap/cache/
+/public/hot
+/public/storage
+
+# === Storage e logs ===
+/storage/*.key
+/storage/app/public/
+/storage/framework/cache/data/
+/storage/framework/sessions/
+/storage/framework/views/
+/storage/framework/testing/
+/storage/logs/
+
+# === Arquivos de ambiente e cache ===
+.env
+.env.*
+.phpunit.result.cache
+
+# === Arquivos de IDEs e sistema ===
+.idea/
+/.vscode/
+/*.sublime*
+.DS_Store
+Thumbs.db
+
+# === Homestead ===
+Homestead.json
+Homestead.yaml
+
+# === Laravel Nova ===
+/nova-components/
+
+# === Ignorar recursos específicos do projeto ===
+/console/
+/resources/db/
+/resources/json/
+
+# === Arquivos e diretórios de banco de dados ===
+*.log
+*.sql
+*.sqlite
+*.bak
+/db/
+
