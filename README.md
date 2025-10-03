@@ -3,6 +3,16 @@
 > Trabalho desenvolvido para o curso do **Senai**, utilizando **Laravel + Docker**.  
 
 ---
+## 📸 Preview
+
+<img src="./prints/1.png" alt="Projeto React App" width="300" />
+<img src="./prints/2.png" alt="Projeto React App" width="300" />
+<img src="./prints/3.png" alt="Projeto React App" width="300" />
+<img src="./prints/4.png" alt="Projeto React App" width="300" />
+<img src="./prints/5.png" alt="Projeto React App" width="300" />
+<img src="./prints/6.png" alt="Projeto React App" width="300" />
+<img src="./prints/7.png" alt="Projeto React App" width="300" />
+<img src="./prints/8.png" alt="Projeto React App" width="300" />
 
 ## ⚡ Pré-requisitos
 
